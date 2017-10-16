@@ -2,8 +2,9 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>DeviceBar.qml</file>
-        <file>BarButton.qml</file>
+        <file>ADeviceBar.qml</file>
+        <file>AButton.qml</file>
         <file>Constants.js</file>
+        <file>AComboBox.qml</file>
     </qresource>
 </RCC>
