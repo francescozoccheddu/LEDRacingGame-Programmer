@@ -13,7 +13,7 @@ ListView {
         id: contactDelegate
         Item {
             height: Constants.Sizes.listItem
-            width: 100
+            width: parent.width
             Column {
                 Text {
                     text: model.name
@@ -35,6 +35,9 @@ ListView {
 
     highlight: Rectangle {
         color: Constants.Colors.back
+    }
+
+    ScrollIndicator.vertical: ScrollIndicator {
     }
 
 }
