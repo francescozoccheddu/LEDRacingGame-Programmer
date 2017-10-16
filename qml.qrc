@@ -3,5 +3,7 @@
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>ParameterPanel.qml</file>
+        <file>ManualParameterPanel.qml</file>
+        <file>ParameterList.qml</file>
     </qresource>
 </RCC>
