@@ -21,4 +21,5 @@ var Sizes = {
     heightWidget: 40,
     marginLarge: 10,
     marginSmall: 5,
+    listItem: 40
 }
