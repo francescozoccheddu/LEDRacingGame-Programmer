@@ -7,15 +7,6 @@ Item {
         ListElement {
             name: "dio"
         }
-        ListElement {
-            name: "dio"
-        }
-        ListElement {
-            name: "dio"
-        }
-        ListElement {
-            name: "dio"
-        }
     }
 
     ListView {
@@ -26,7 +17,7 @@ Item {
             height: 25
             width: 100
             color: "red"
-            Text { text: "name" }
+            Text { text: name }
         }
         spacing: 4
     }
