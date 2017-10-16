@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
+import "Constants.js" as Const
 
 ApplicationWindow {
     visible: true
@@ -8,26 +9,8 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
-    SwipeView {
-        id: swipeView
-        anchors.fill: parent
-        clip: true
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-        background: Rectangle {
-            color: "light grey"
-        }
+    BarButton {
 
-        Item {
-            ParameterList {
-                anchors.fill: parent
-            }
-        }
-
-        Item {
-            ParameterPanel {
-                anchors.fill: parent
-            }
-        }
     }
+
 }
