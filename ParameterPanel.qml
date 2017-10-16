@@ -4,6 +4,8 @@ import QtQuick.Layouts 1.3
 
 Item {
     id: parameterPanel
+    property alias name: labName.text
+    property alias description: labDescr.text
 
     ColumnLayout {
         id: colRoot
@@ -24,21 +26,19 @@ Item {
 
                 Text {
                     id: labName
-                    text: qsTr("Name")
                     elide: Text.ElideRight
                     wrapMode: Text.NoWrap
                     font.weight: Font.Bold
-                    font.pixelSize: 16
+                    font.pixelSize: 14
                     width: parent.width
                 }
 
                 Text {
                     id: labDescr
-                    text: qsTr("Very very long description..")
                     elide: Text.ElideRight
                     font.weight: Font.Light
                     wrapMode: Text.NoWrap
-                    font.pixelSize: 8
+                    font.pixelSize: 10
                     width: parent.width
                 }
             }
@@ -91,13 +91,13 @@ Item {
                 Layout.preferredWidth: 150
 
                 TabButton {
-                    id: tabButton
+                    id: tabButtSpec
                     text: qsTr("Tab Button")
                     height: parent.height
                 }
 
                 TabButton {
-                    id: tabButton1
+                    id: tabButtMan
                     text: qsTr("Tab Button")
                     height: parent.height
                 }
@@ -110,32 +110,22 @@ Item {
                 Layout.fillWidth: true
                 currentIndex: tabBar.currentIndex
                 background: Rectangle {
-                    color: "red"
+                    color: "light grey"
                 }
 
                 Item {
+                    id: pageSpec
                     Loader {
                         id: placeholder
                     }
                 }
 
                 Item {
-                    ColumnLayout {
-                        anchors.fill: parent
-
-                        Text {
-                            id: text1
-                            text: qsTr("Text")
-                            font.pixelSize: 12
-                        }
+                    ManualParameterPanel {
 
                     }
                 }
-
             }
-
-
-
         }
     }
 }

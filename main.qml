@@ -8,8 +8,26 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
-    ParameterPanel {
-        width: parent.width
-        height: parent.height
+    SwipeView {
+        id: swipeView
+        anchors.fill: parent
+        clip: true
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        background: Rectangle {
+            color: "light grey"
+        }
+
+        Item {
+            ParameterList {
+                anchors.fill: parent
+            }
+        }
+
+        Item {
+            ParameterPanel {
+                anchors.fill: parent
+            }
+        }
     }
 }
