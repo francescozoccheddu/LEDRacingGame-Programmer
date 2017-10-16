@@ -2,6 +2,11 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QVariantMap>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QDebug>
+#include <QFile>
 #include "parameterdataobject.h"
 
 int main(int argc, char *argv[])
@@ -13,11 +18,23 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* ctx{engine.rootContext()};
 
+    QString val;
+    QFile file;
+    file.setFileName("C:/Users/zocch/Desktop/test.json");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    val = file.readAll();
+    file.close();
+    QJsonDocument doc = QJsonDocument::fromJson(val.toUtf8());
+    QJsonObject root = doc.object();
+    QJsonArray list = root["list"].toArray();
+
     QList<QObject*> dataList;
-    dataList.append(new ParameterDataObject("Item 1", "red"));
-    dataList.append(new ParameterDataObject("Item 2", "green"));
-    dataList.append(new ParameterDataObject("Item 3", "blue"));
-    dataList.append(new ParameterDataObject("Item 4", "yellow"));
+    for (QJsonValueRef objRef : list) {
+        QJsonObject o = objRef.toObject();
+        QString name = o["name"].toString();
+        QString description = o["description"].toString();
+        dataList.append(new ParameterDataObject(name, description));
+    }
 
     ctx->setContextProperty("parameterDataModel", QVariant::fromValue(dataList));
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
