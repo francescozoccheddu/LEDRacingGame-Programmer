@@ -9,25 +9,14 @@ RowLayout {
     AButton {
         id: btBack
         text: qsTr("Back")
+        visible: svPane.currentIndex == 1
+        onClicked: { svPane.currentIndex = 0}
     }
 
     RowLayout {
         id: rowDevice
+        Layout.fillWidth: false
         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-
-        RowLayout {
-            id: rowParameter
-
-            AButton {
-                id: btLoad
-                text: qsTr("Load")
-            }
-
-            AButton {
-                id: btStore
-                text: qsTr("Store")
-            }
-        }
 
         AComboBox {
             id: cbDevice

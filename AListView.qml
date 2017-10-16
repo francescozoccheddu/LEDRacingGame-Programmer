@@ -8,12 +8,14 @@ ListView {
     spacing: Constants.Sizes.marginSmall
     currentIndex: 0
     focus: true
+    highlightFollowsCurrentItem: false
 
     delegate: Component {
         id: contactDelegate
         Item {
             height: Constants.Sizes.listItem
             width: parent.width
+            x: ListView.isCurrentItem ? 10 : 0
             Column {
                 Text {
                     text: model.name
@@ -33,8 +35,14 @@ ListView {
         }
     }
 
-    highlight: Rectangle {
-        color: Constants.Colors.back
+    highlight: Component {
+        id: highlight
+        Rectangle {
+            width: parent.width;
+            height: Constants.Sizes.listItem
+            color: Constants.Colors.front
+            y: currentItem.y
+        }
     }
 
     ScrollIndicator.vertical: ScrollIndicator {
