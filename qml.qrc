@@ -6,5 +6,6 @@
         <file>AButton.qml</file>
         <file>Constants.js</file>
         <file>AComboBox.qml</file>
+        <file>AListView.qml</file>
     </qresource>
 </RCC>

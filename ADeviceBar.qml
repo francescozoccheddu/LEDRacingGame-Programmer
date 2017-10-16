@@ -5,7 +5,6 @@ import "Constants.js" as Constants
 
 RowLayout {
     id: rowRoot
-    anchors.margins: Constants.Sizes.marginLarge
 
     AButton {
         id: btBack
