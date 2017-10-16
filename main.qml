@@ -10,8 +10,14 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
-    SwipeView {
-        id: svPane
+    ColumnLayout {
+        anchors.fill: parent
+
+        SwipeView {
+            id: svPane
+            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+        Layout.fillHeight: false
+        Layout.fillWidth: false
         anchors.fill: parent
         anchors.margins: Constants.Sizes.marginLarge
         currentIndex: 0
@@ -23,17 +29,24 @@ ApplicationWindow {
         }
 
         Item {
+            AParameterPanel {
 
+}
         }
 
     }
 
     ADeviceBar {
         id: deviceBar
+        Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+        Layout.fillHeight: false
+        Layout.fillWidth: true
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.margins: Constants.Sizes.marginLarge
+    }
+
     }
 
 }
