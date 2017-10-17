@@ -9,6 +9,7 @@ ListView {
     currentIndex: 0
     focus: true
     highlightFollowsCurrentItem: false
+    model: JSON.parse(fileIO.read("C:/Users/zocch/Desktop/test.json"))
 
     delegate: Component {
         id: contactDelegate

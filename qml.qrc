@@ -6,7 +6,7 @@
         <file>AButton.qml</file>
         <file>Constants.js</file>
         <file>AComboBox.qml</file>
-        <file>AListView.qml</file>
+        <file>AParSelector.qml</file>
         <file>AParameterPanel.qml</file>
     </qresource>
 </RCC>
