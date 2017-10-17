@@ -23,8 +23,7 @@ ApplicationWindow {
         currentIndex: 0
 
         Item {
-            AListView {
-                model: parameterDataModel
+            AParSelector {
             }
         }
 
