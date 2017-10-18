@@ -4,14 +4,13 @@
         <file>qtquickcontrols2.conf</file>
         <file>ADeviceBar.qml</file>
         <file>AButton.qml</file>
-        <file>Constants.js</file>
-        <file>ABarComboBox.qml</file>
         <file>AParSelector.qml</file>
         <file>AParameterPanel.qml</file>
-        <file>AScrollIndicator.qml</file>
-        <file>ABarButton.qml</file>
-        <file>AComboBox.qml</file>
         <file>ARealParameter.qml</file>
         <file>AIntParameter.qml</file>
+        <file>AListDelegate.qml</file>
+        <file>AActionRow.qml</file>
+        <file>ABitMapParameter.qml</file>
+        <file>ASoundParameter.qml</file>
     </qresource>
 </RCC>
