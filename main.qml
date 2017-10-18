@@ -9,30 +9,32 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Hello World")
+    readonly property var parList: JSON.parse(fileIO.read("C:/Users/zocch/Desktop/test.json"))
 
     ColumnLayout {
         anchors.fill: parent
 
-        SwipeView {
-            id: svPane
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-        Layout.fillHeight: false
-        Layout.fillWidth: false
-        anchors.fill: parent
-        anchors.margins: Constants.Sizes.marginLarge
-        currentIndex: 0
+        RowLayout {
+            Layout.preferredWidth: 65535
+            Layout.fillHeight: true
+            Layout.fillWidth: true
 
-        Item {
             AParSelector {
+                id: parSelector
+                model: parList
+                width: 200
+                Layout.fillHeight: true
+            }
+
+            AParameterPanel {
+                id: aParameterPanel
+                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                Layout.preferredWidth: 65535
+                parameter: parList[parSelector.currentIndex]
             }
         }
-
-        Item {
-            AParameterPanel {
-
-}
-        }
-
     }
 
     ADeviceBar {
@@ -46,6 +48,5 @@ ApplicationWindow {
         anchors.margins: Constants.Sizes.marginLarge
     }
 
-    }
 
 }
