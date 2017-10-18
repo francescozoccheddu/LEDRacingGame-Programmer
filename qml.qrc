@@ -10,5 +10,8 @@
         <file>AParameterPanel.qml</file>
         <file>AScrollIndicator.qml</file>
         <file>ABarButton.qml</file>
+        <file>AComboBox.qml</file>
+        <file>ARealParameter.qml</file>
+        <file>AIntParameter.qml</file>
     </qresource>
 </RCC>

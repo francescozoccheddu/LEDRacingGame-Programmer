@@ -22,7 +22,7 @@ ApplicationWindow {
             AParSelector {
                 id: parSelector
                 model: parList
-                width: 200
+                width: 300
                 Layout.fillHeight: true
             }
 
