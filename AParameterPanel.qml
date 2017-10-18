@@ -31,10 +31,28 @@ ColumnLayout {
 
     }
 
-    Loader {
+    GroupBox {
+        title: parameter.unit
+
+        ColumnLayout {
+            anchors.fill: parent
+
+            ARealParameter {
+                parData: parameter
+                visible: parameter.type === "real"
+            }
+
+            AIntParameter {
+                parData: parameter
+                visible: parameter.type === "int"
+            }
+        }
+    }
+
+    /*Loader {
         Layout.preferredWidth: 65535
         Layout.preferredHeight: 65535
         Layout.fillHeight: true
         Layout.fillWidth: true
-    }
+    }*/
 }
