@@ -1,58 +1,49 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import "Constants.js" as Constants
 
-ColumnLayout {
+RowLayout {
     property var parameter
 
-    RowLayout {
-        Layout.preferredWidth: 65535
-        Layout.fillHeight: false
-        Layout.fillWidth: true
-
-        Column {
-
-            Label {
-                id: lbName
-                text: parameter.name
-            }
-
-            Label {
-                id: lbDescription
-                text: parameter.description
-            }
+    Component {
+        id: compInt
+        AIntParameter {
+            parData: parameter
+            visible: parameter.type === "int"
         }
+    }
 
-        AButton {
-            text: qsTr("Restore")
-            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+    Component {
+        id: compReal
+        ARealParameter {
+            parData: parameter
+            visible: parameter.type === "real"
         }
-
     }
 
     GroupBox {
+        Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
         title: parameter.unit
 
         ColumnLayout {
             anchors.fill: parent
 
-            ARealParameter {
-                parData: parameter
-                visible: parameter.type === "real"
+            Loader {
+                sourceComponent: {
+                    switch (parameter.type) {
+                    case "int":
+                        return compInt
+                    case "real":
+                        return compReal
+                    }
+                }
             }
 
-            AIntParameter {
-                parData: parameter
-                visible: parameter.type === "int"
-            }
         }
     }
 
-    /*Loader {
-        Layout.preferredWidth: 65535
-        Layout.preferredHeight: 65535
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-    }*/
+    AActionRow {
+        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+    }
+
 }
