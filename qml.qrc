@@ -5,8 +5,10 @@
         <file>ADeviceBar.qml</file>
         <file>AButton.qml</file>
         <file>Constants.js</file>
-        <file>AComboBox.qml</file>
+        <file>ABarComboBox.qml</file>
         <file>AParSelector.qml</file>
         <file>AParameterPanel.qml</file>
+        <file>AScrollIndicator.qml</file>
+        <file>ABarButton.qml</file>
     </qresource>
 </RCC>

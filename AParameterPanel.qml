@@ -3,34 +3,38 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "Constants.js" as Constants
 
-Rectangle {
-    id: rectangle
-    anchors.fill: parent
-    color: Constants.Colors.front
+ColumnLayout {
+    property var parameter
 
     RowLayout {
-        anchors.right: parent.right
-        anchors.rightMargin: 640
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 0
+        Layout.preferredWidth: 65535
+        Layout.fillHeight: false
+        Layout.fillWidth: true
 
-        ColumnLayout {
-            id: columnLayout
-            width: 100
-            height: 100
+        Column {
 
             Label {
-                id: label
-                text: qsTr("Name")
+                id: lbName
+                text: parameter.name
             }
 
             Label {
-                id: label1
-                text: qsTr("Description")
+                id: lbDescription
+                text: parameter.description
             }
         }
 
+        AButton {
+            text: qsTr("Restore")
+            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+        }
+
+    }
+
+    Loader {
+        Layout.preferredWidth: 65535
+        Layout.preferredHeight: 65535
+        Layout.fillHeight: true
+        Layout.fillWidth: true
     }
 }
