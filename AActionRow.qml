@@ -4,25 +4,25 @@ import QtQuick.Layouts 1.3
 
 RowLayout {
     id: root
-    property var onRestore
-    property var onLoad
-    property var onStore
+    signal restore()
+    signal load()
+    signal store()
 
     AButton {
         id: btRestore
         text: qsTr("Restore")
-        onClicked: root.onRestore()
+        onClicked: root.restore()
     }
 
     AButton {
         id: btLoad
         text: qsTr("Load")
-        onClicked: root.onLoad()
+        onClicked: root.load()
     }
 
     AButton {
         id: btStore
         text: qsTr("Store")
-        onClicked: root.onStore()
+        onClicked: root.store()
     }
 }

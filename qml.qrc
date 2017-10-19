@@ -4,13 +4,13 @@
         <file>qtquickcontrols2.conf</file>
         <file>ADeviceBar.qml</file>
         <file>AButton.qml</file>
-        <file>AParSelector.qml</file>
+        <file>AList.qml</file>
         <file>AParameterPanel.qml</file>
         <file>ARealParameter.qml</file>
         <file>AIntParameter.qml</file>
         <file>AListDelegate.qml</file>
         <file>AActionRow.qml</file>
-        <file>ABitMapParameter.qml</file>
+        <file>ABitmapParameter.qml</file>
         <file>ASoundParameter.qml</file>
     </qresource>
 </RCC>

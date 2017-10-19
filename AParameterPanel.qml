@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 RowLayout {
     id: root
-    property var parameter
+    property var eeParameter
 
     function getParameterQML(type) {
         switch (type) {
@@ -19,28 +19,15 @@ RowLayout {
         }
     }
 
-    function parameterStore() {
-        var val = loader.item.getParameterValue()
-        console.log(val)
-    }
-
-    function parameterLoad() {
-        console.log("Load")
-    }
-
-    function parameterRestore() {
-        console.log("Restore " )
-    }
-
     ColumnLayout {
         anchors.fill: parent
 
         Loader {
             id: loader
-            source: getParameterQML(parameter.type)
+            source: getParameterQML(eeParameter.type)
 
             onLoaded: {
-                item.parameter = root.parameter.data
+                item.eeParameterData = eeParameter.data
             }
         }
 
@@ -48,9 +35,15 @@ RowLayout {
 
     AActionRow {
         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-        onRestore: parameterRestore
-        onLoad: parameterLoad
-        onStore: parameterStore
+        onRestore: {
+            console.log("Restored")
+        }
+        onLoad: {
+            console.log("Load")
+        }
+        onStore: {
+            console.log("Stored")
+        }
     }
 
 }

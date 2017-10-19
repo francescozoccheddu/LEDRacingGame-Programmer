@@ -3,17 +3,17 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 RowLayout {
-    property var parameter;
+    property var eeParameterData;
 
     SpinBox {
         id: slider
-        from: parameter.from
-        to: parameter.to
+        from: eeParameterData.from
+        to: eeParameterData.to
         editable: true
     }
 
     Label {
-        text: parameter.unit !== 'undefined' ? parameter.unit : ""
+        text: eeParameterData.unit !== 'undefined' ? eeParameterData.unit : ""
     }
 
     function getParameterValue() {
