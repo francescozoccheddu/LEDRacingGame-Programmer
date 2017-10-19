@@ -34,11 +34,15 @@ RowLayout {
     }
 
     function getParameterValue() {
-
+        var rangeh = parameter.toh - parameter.fromh
+        var rangeb = parameter.tob - parameter.fromb
+        return (slider.value-parameter.fromh) * rangeb / rangeh + parameter.fromb
     }
 
     function setParameterValue(parameterValue) {
-
+        var rangeh = parameter.toh - parameter.fromh
+        var rangeb = parameter.tob - parameter.fromb
+        slider.value = (parameterValue - parameter.fromb) * rangeh / rangeb + parameter.fromh
     }
 
 }
