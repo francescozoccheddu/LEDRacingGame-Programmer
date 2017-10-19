@@ -13,7 +13,7 @@ ColumnLayout {
             Repeater {
                 model: parameter.rows * parameter.columns
                 Rectangle {
-                    property var on: false
+                    property bool on: false
                     width: 20
                     height: width
                     radius: width / 2
@@ -29,4 +29,12 @@ ColumnLayout {
 
         }
     }
+
+    function getParameterValue() {
+    }
+
+    function setParameterValue(parameterValue) {
+
+    }
+
 }

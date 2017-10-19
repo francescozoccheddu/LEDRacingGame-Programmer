@@ -6,58 +6,51 @@ RowLayout {
     id: root
     property var parameter
 
-    Component {
-        id: compInt
-        AIntParameter {
-            parameter: root.parameter.data
-        }
-    }
-
-    Component {
-        id: compReal
-        ARealParameter {
-            parameter: root.parameter.data
-        }
-    }
-
-    Component {
-        id: compSound
-        ASoundParameter {
-            parameter: root.parameter.data
-        }
-    }
-
-    Component {
-        id: compBitmap
-        ABitMapParameter {
-            parameter: root.parameter.data
-        }
-    }
-
-    function chooseParameter() {
-        switch (parameter.type) {
+    function getParameterQML(type) {
+        switch (type) {
             case "int":
-                return compInt
+                return "AIntParameter.qml"
             case "real":
-                return compReal
+                return "ARealParameter.qml"
             case "sound":
-                return compSound
+                return "ASoundParameter.qml"
             case "bitmap":
-                return compBitmap
+                return "ABitmapParameter.qml"
         }
+    }
+
+    function parameterStore() {
+        var val = loader.item.getParameterValue()
+        console.log(val)
+    }
+
+    function parameterLoad() {
+        console.log("Load")
+    }
+
+    function parameterRestore() {
+        console.log("Restore " )
     }
 
     ColumnLayout {
         anchors.fill: parent
 
         Loader {
-            sourceComponent: chooseParameter()
+            id: loader
+            source: getParameterQML(parameter.type)
+
+            onLoaded: {
+                item.parameter = root.parameter.data
+            }
         }
 
     }
 
-    /*AActionRow {
+    AActionRow {
         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-    }*/
+        onRestore: parameterRestore
+        onLoad: parameterLoad
+        onStore: parameterStore
+    }
 
 }
