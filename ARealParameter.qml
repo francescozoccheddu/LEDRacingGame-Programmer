@@ -3,12 +3,12 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 RowLayout {
-    property var parData;
+    property var parameter;
 
     Slider {
         id: slider
-        from: parData.fromh
-        to: parData.toh
+        from: parameter.fromh
+        to: parameter.toh
         onValueChanged: {
             textField.text = value.toFixed(3)
         }
@@ -17,8 +17,8 @@ RowLayout {
     TextField {
         id: textField
         validator: DoubleValidator {
-            bottom: parData.fromh
-            top: parData.toh
+            bottom: parameter.fromh
+            top: parameter.toh
             decimals: 3
             notation: DoubleValidator.StandardNotation
         }
@@ -27,6 +27,18 @@ RowLayout {
             if (!isNaN(val))
                 slider.value = val
         }
+    }
+
+    Label {
+        text: parameter.unit !== 'undefined' ? parameter.unit : ""
+    }
+
+    function getParameterValue() {
+
+    }
+
+    function setParameterValue(parameterValue) {
+
     }
 
 }
