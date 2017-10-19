@@ -3,12 +3,12 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 RowLayout {
-    property var parameter;
+    property var eeParameterData;
 
     Slider {
         id: slider
-        from: parameter.fromh
-        to: parameter.toh
+        from: eeParameterData.fromh
+        to: eeParameterData.toh
         onValueChanged: {
             textField.text = value.toFixed(3)
         }
@@ -17,8 +17,8 @@ RowLayout {
     TextField {
         id: textField
         validator: DoubleValidator {
-            bottom: parameter.fromh
-            top: parameter.toh
+            bottom: eeParameterData.fromh
+            top: eeParameterData.toh
             decimals: 3
             notation: DoubleValidator.StandardNotation
         }
@@ -30,19 +30,19 @@ RowLayout {
     }
 
     Label {
-        text: parameter.unit !== 'undefined' ? parameter.unit : ""
+        text: eeParameterData.unit !== 'undefined' ? eeParameterData.unit : ""
     }
 
     function getParameterValue() {
-        var rangeh = parameter.toh - parameter.fromh
-        var rangeb = parameter.tob - parameter.fromb
-        return (slider.value-parameter.fromh) * rangeb / rangeh + parameter.fromb
+        var rangeh = eeParameterData.toh - eeParameterData.fromh
+        var rangeb = eeParameterData.tob - eeParameterData.fromb
+        return (slider.value-eeParameterData.fromh) * rangeb / rangeh + eeParameterData.fromb
     }
 
     function setParameterValue(parameterValue) {
-        var rangeh = parameter.toh - parameter.fromh
-        var rangeb = parameter.tob - parameter.fromb
-        slider.value = (parameterValue - parameter.fromb) * rangeh / rangeb + parameter.fromh
+        var rangeh = eeParameterData.toh - eeParameterData.fromh
+        var rangeb = eeParameterData.tob - eeParameterData.fromb
+        slider.value = (parameterValue - eeParameterData.fromb) * rangeh / rangeb + eeParameterData.fromh
     }
 
 }

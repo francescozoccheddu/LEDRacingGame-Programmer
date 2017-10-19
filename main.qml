@@ -8,14 +8,13 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Hello World")
-    readonly property var parList: JSON.parse(fileIO.read("C:/Users/zocch/Desktop/test.json"))
 
     ColumnLayout {
         anchors.fill: parent
 
-            AParSelector {
+            AList {
                 id: parSelector
-                model: parList
+                model: JSON.parse(fileIO.read("C:/Users/zocch/Desktop/test.json"))
                 Layout.preferredHeight: 65535
                 Layout.preferredWidth: 65535
                 Layout.fillHeight: true

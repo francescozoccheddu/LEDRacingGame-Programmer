@@ -4,12 +4,12 @@ import QtQuick.Layouts 1.3
 
 ColumnLayout {
     id: root
-    property var parameter
+    property var eeParameterData
 
     RowLayout {
         AIntParameter {
             id: ticks
-            parameter: root.parameter.ticks
+            eeParameterData: root.eeParameterData.ticks
         }
     }
 
@@ -24,7 +24,7 @@ ColumnLayout {
                 Repeater {
                     model: ticks.getParameterValue()
                     ARealParameter {
-                        parameter: root.parameter.pwm
+                        eeParameterData: root.eeParameterData.pwm
                     }
                 }
             }
@@ -36,7 +36,7 @@ ColumnLayout {
                 Repeater {
                     model: ticks.getParameterValue()
                     ARealParameter {
-                        parameter: root.parameter.duration
+                        eeParameterData: root.eeParameterData.duration
                     }
                 }
             }

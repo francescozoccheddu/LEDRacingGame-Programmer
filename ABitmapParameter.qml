@@ -3,15 +3,15 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 ColumnLayout {
-    property var parameter
+    property var eeParameterData
     Repeater {
-        model: parameter.count
+        model: eeParameterData.count
         GridLayout {
-            rows: parameter.rows
-            columns: parameter.columns
+            rows: eeParameterData.rows
+            columns: eeParameterData.columns
 
             Repeater {
-                model: parameter.rows * parameter.columns
+                model: eeParameterData.rows * eeParameterData.columns
                 Rectangle {
                     property bool on: false
                     width: 20
