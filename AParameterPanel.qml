@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import "ByteList.js" as ByteList
 
 RowLayout {
     id: root
@@ -36,13 +37,14 @@ RowLayout {
     AActionRow {
         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         onRestore: {
-            console.log("Restored")
+            loader.item.setParameterValue(eeParameter.defvalue)
         }
         onLoad: {
             console.log("Load")
         }
         onStore: {
-            console.log("Stored")
+            var val = loader.item.getParameterValue()
+            console.log(val)
         }
     }
 

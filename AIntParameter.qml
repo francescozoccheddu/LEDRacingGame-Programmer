@@ -1,12 +1,13 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import "ByteList.js" as ByteList
 
 RowLayout {
     property var eeParameterData;
 
     SpinBox {
-        id: slider
+        id: spinbox
         from: eeParameterData.from
         to: eeParameterData.to
         editable: true
@@ -17,11 +18,11 @@ RowLayout {
     }
 
     function getParameterValue() {
-        return slider.value
+        return ByteList.fromInt(spinbox.value)
     }
 
-    function setParameterValue(parameterValue) {
-        slider.value = parameterValue
+    function setParameterValue(vals) {
+        spinbox.value = ByteList.toInt(vals)
     }
 
 }

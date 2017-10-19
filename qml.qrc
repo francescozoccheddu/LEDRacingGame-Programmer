@@ -12,5 +12,6 @@
         <file>AActionRow.qml</file>
         <file>ABitmapParameter.qml</file>
         <file>ASoundParameter.qml</file>
+        <file>ByteList.js</file>
     </qresource>
 </RCC>
