@@ -10,7 +10,6 @@ RowLayout {
         id: compInt
         AIntParameter {
             parameter: root.parameter.data
-            visible: root.parameter.type === "int"
         }
     }
 
@@ -18,7 +17,6 @@ RowLayout {
         id: compReal
         ARealParameter {
             parameter: root.parameter.data
-            visible: root.parameter.type === "real"
         }
     }
 
@@ -26,7 +24,26 @@ RowLayout {
         id: compSound
         ASoundParameter {
             parameter: root.parameter.data
-            visible: root.parameter.type === "sound"
+        }
+    }
+
+    Component {
+        id: compBitmap
+        ABitMapParameter {
+            parameter: root.parameter.data
+        }
+    }
+
+    function chooseParameter() {
+        switch (parameter.type) {
+            case "int":
+                return compInt
+            case "real":
+                return compReal
+            case "sound":
+                return compSound
+            case "bitmap":
+                return compBitmap
         }
     }
 
@@ -34,16 +51,7 @@ RowLayout {
         anchors.fill: parent
 
         Loader {
-            sourceComponent: {
-                switch (root.parameter.type) {
-                case "int":
-                    return compInt
-                case "real":
-                    return compReal
-                case "sound":
-                    return compSound
-                }
-            }
+            sourceComponent: chooseParameter()
         }
 
     }

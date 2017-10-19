@@ -10,10 +10,10 @@ ColumnLayout {
         Layout.preferredWidth: 65535
         Layout.fillWidth: true
         ColumnLayout {
-            Text {
+            Label {
                 text: modelData.name
             }
-            Text {
+            Label {
                 text: modelData.description
             }
         }
