@@ -1,25 +1,23 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QVariantMap>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
-#include <QDebug>
-#include <QFile>
-#include "parameterdataobject.h"
 #include "afileio.h"
+#include "aserialio.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
+    qmlRegisterType<ASerialPort>("ASerialPort", 1,0, "ASerialPort");
+
     QQmlApplicationEngine engine;
     QQmlContext* ctx{engine.rootContext()};
 
     AFileIO *fileIO = new AFileIO();
+    ASerialIO *serialIO = new ASerialIO();
     ctx->setContextProperty("fileIO", fileIO);
+    ctx->setContextProperty("serialIO", serialIO);
 
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
