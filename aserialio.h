@@ -9,21 +9,22 @@ class ASerialIO : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<ASerialPort> portList READ getPortList NOTIFY portListChanged)
-    QQmlListProperty<ASerialPort> portList;
 
-    static void appendFunction(QQmlListProperty<ASerialPort> * list, ASerialPort * item);
     static int countFunction(QQmlListProperty<ASerialPort> * list);
     static ASerialPort * atFunction(QQmlListProperty<ASerialPort> * list, int index);
-    static void clearFunction(QQmlListProperty<ASerialPort> * list);
+    void clearPorts();
+
+    ASerialPort **portList;
+    int portCount;
 
 public:
     explicit ASerialIO();
     Q_INVOKABLE void updatePortList();
     virtual ~ASerialIO();
 
-QQmlListProperty<ASerialPort> getPortList() const
+QQmlListProperty<ASerialPort> getPortList()
 {
-    return portList;
+    return QQmlListProperty<ASerialPort>(this, Q_NULLPTR, countFunction, atFunction);
 }
 
 signals:

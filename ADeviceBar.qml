@@ -6,6 +6,8 @@ RowLayout {
     id: rowRoot
         ComboBox {
             id: cbDevice
+            model: serialIO.portList
+            textRole: "name"
         }
 
         AButton {
@@ -13,7 +15,10 @@ RowLayout {
             text: qsTr("Refresh")
             onClicked: {
                 serialIO.updatePortList()
-                console.log(serialIO.portList)
+                var list = serialIO.portList
+                console.log(list)
+                for (var p = 0; p < list.length; p++)
+                    console.log(list[p].name)
             }
         }
 

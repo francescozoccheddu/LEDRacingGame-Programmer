@@ -7,14 +7,14 @@
 class ASerialPort : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ getName)
-    Q_PROPERTY(QString location READ getLocation)
-    Q_PROPERTY(QString description READ getDescription)
+    Q_PROPERTY(QString name READ getName NOTIFY portChanged)
+    Q_PROPERTY(QString location READ getLocation NOTIFY portChanged)
+    Q_PROPERTY(QString description READ getDescription NOTIFY portChanged)
 
-    QSerialPortInfo info;
+    const QSerialPortInfo info;
 
 public:
-    ASerialPort(QSerialPortInfo info);
+    ASerialPort(const QSerialPortInfo info);
 
     const QSerialPortInfo getSerialPortInfo() const;
 
@@ -36,6 +36,8 @@ public:
     }
 
 signals:
+
+    void portChanged(QString location);
 
 public slots:
 };
