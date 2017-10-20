@@ -11,6 +11,10 @@ RowLayout {
         AButton {
             id: btRefresh
             text: qsTr("Refresh")
+            onClicked: {
+                serialIO.updatePortList()
+                console.log(serialIO.portList)
+            }
         }
 
 }

@@ -1,7 +1,7 @@
 #include "afileio.h"
 #include <QFile>
 
-AFileIO::AFileIO(QObject *parent) : QObject(parent)
+AFileIO::AFileIO()
 {
 
 }
