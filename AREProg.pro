@@ -15,8 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     afileio.cpp \
-    aserialio.cpp \
-    aserialport.cpp
+    aserialio.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,5 +32,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     afileio.h \
-    aserialio.h \
-    aserialport.h
+    aserialio.h

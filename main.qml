@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.2
 
 ApplicationWindow {
     id: applicationWindow
@@ -28,6 +29,23 @@ ApplicationWindow {
                 Layout.fillWidth: true
                 Layout.preferredWidth: 65535
             }
+    }
+
+
+    MessageDialog {
+        id: serialErrorDialog
+        title: "Serial port error"
+        icon: StandardIcon.Warning
+        standardButtons: StandardButton.Ignore
+    }
+
+    Connections {
+        target: serialIO
+        onError: {
+            serialErrorDialog.visible = true
+            serialErrorDialog.text = "Error code " + code
+            serialErrorDialog.informativeText = message
+        }
     }
 
 }
