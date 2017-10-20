@@ -1,48 +1,28 @@
 #include "aserialio.h"
 #include <QList>
 #include <QSerialPortInfo>
-#include <QVector>
 
-
-
-int ASerialIO::countFunction(QQmlListProperty<ASerialPort> *list)
+void ASerialIO::emitError(QSerialPort::SerialPortError code)
 {
-    return reinterpret_cast<ASerialIO*>(list->object)->portCount;
+    if (code != QSerialPort::SerialPortError::NoError)
+        emit error(code, serialPort.errorString());
 }
 
-ASerialPort *ASerialIO::atFunction(QQmlListProperty<ASerialPort> *list, int index)
+ASerialIO::ASerialIO()
 {
-    return reinterpret_cast<ASerialIO*>(list->object)->portList[index];
-}
-
-void ASerialIO::clearPorts()
-{
-    for (int p = 0; p < portCount; p++)
-        delete portList[p];
-    if (portList != Q_NULLPTR)
-        delete[] portList;
-    portList = Q_NULLPTR;
-    portCount = 0;
-}
-
-ASerialIO::ASerialIO() : portList(Q_NULLPTR), portCount(0)
-{
-}
-
-void ASerialIO::updatePortList()
-{
-    clearPorts();
-    QList<QSerialPortInfo> portInfoList = QSerialPortInfo::availablePorts();
-    portCount = portInfoList.length();
-    if (portCount > 0){
-        portList = new ASerialPort*[portCount];
-        for (int p = 0; p < portCount; p++)
-            portList[p] = new ASerialPort(portInfoList[p]);
-    }
-    emit portListChanged(getPortList());
+    QObject::connect(&serialPort, &QSerialPort::errorOccurred, this, &ASerialIO::emitError);
 }
 
 ASerialIO::~ASerialIO()
 {
-    clearPorts();
+    serialPort.close();
+}
+
+void ASerialIO::refreshPortList()
+{
+    portList.clear();
+    QList<QSerialPortInfo> portInfoList = QSerialPortInfo::availablePorts();
+    for (int p = 0; p < portInfoList.length(); p++)
+        portList.append(portInfoList.at(p).portName());
+    emit portListChanged(getPortList());
 }

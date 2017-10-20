@@ -6,20 +6,34 @@ RowLayout {
     id: rowRoot
         ComboBox {
             id: cbDevice
-            model: serialIO.portList
-            textRole: "name"
+            enabled: !serialIO.open
+            model: {
+                var list = serialIO.portList
+                if (list.length === 0)
+                    list = ["No port"]
+                return list
+            }
+            popup.onOpened: serialIO.refreshPortList()
+            Component.onCompleted: serialIO.refreshPortList()
         }
 
         AButton {
-            id: btRefresh
-            text: qsTr("Refresh")
+            id: btConnect
+            visible: !serialIO.open
+            enabled: serialIO.portList.length > 0
+            text: qsTr("Connect")
             onClicked: {
-                serialIO.updatePortList()
-                var list = serialIO.portList
-                console.log(list)
-                for (var p = 0; p < list.length; p++)
-                    console.log(list[p].name)
+                serialIO.port = cbDevice.currentText
+                serialIO.open = true
             }
         }
 
+        AButton {
+            id: btDisconnect
+            visible: serialIO.open
+            text: qsTr("Disconnect")
+            onClicked: {
+                serialIO.open = false
+            }
+        }
 }

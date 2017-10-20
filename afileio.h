@@ -7,7 +7,7 @@ class AFileIO : public QObject
 {
     Q_OBJECT
 public:
-    explicit AFileIO();
+    AFileIO();
     Q_INVOKABLE QString read(QString file);
 signals:
 
