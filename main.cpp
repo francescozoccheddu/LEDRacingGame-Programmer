@@ -3,13 +3,14 @@
 #include <QQmlContext>
 #include "afileio.h"
 #include "aserialio.h"
+#include "aserialport.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<ASerialPort>("ASerialPort", 1,0, "ASerialPort");
+    qmlRegisterUncreatableType<ASerialPort>("ASerialPort", 1,0, "ASerialPort", "Cannot instantiate ASerialPort objects");
 
     QQmlApplicationEngine engine;
     QQmlContext* ctx{engine.rootContext()};

@@ -1,6 +1,6 @@
 #include "aserialport.h"
 
-ASerialPort::ASerialPort(QSerialPortInfo info) : info(info)
+ASerialPort::ASerialPort(const QSerialPortInfo info) : info(info)
 {
 
 }
