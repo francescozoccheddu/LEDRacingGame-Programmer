@@ -3,7 +3,6 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 ListView {
-
     currentIndex: 0
     focus: true
     highlightFollowsCurrentItem: false
