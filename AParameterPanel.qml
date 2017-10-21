@@ -29,6 +29,7 @@ RowLayout {
 
             onLoaded: {
                 item.eeParameterData = eeParameter.data
+                item.setParameterValue(eeParameter.defvalue.slice())
             }
         }
 
@@ -37,7 +38,7 @@ RowLayout {
     AActionRow {
         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         onRestore: {
-            loader.item.setParameterValue(eeParameter.defvalue)
+            loader.item.setParameterValue(eeParameter.defvalue.slice())
         }
         onLoad: {
             serialTask.read(eeParameter.address, eeParameter.size, loader.item.setParameterValue)

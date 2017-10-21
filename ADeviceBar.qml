@@ -33,4 +33,10 @@ RowLayout {
             serialIO.open = false
         }
     }
+
+    ProgressBar {
+        from: 0
+        to: 1
+        value: serialTask.isBusy() ? serialTask.getProgress() : 1
+    }
 }
