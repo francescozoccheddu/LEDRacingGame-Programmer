@@ -14,7 +14,7 @@ ColumnLayout {
                 text: eeParameter.name
             }
             Label {
-                text: eeParameter.description
+                text: typeof eeParameter.description == "undefined" ? "" : eeParameter.description
             }
         }
     }
