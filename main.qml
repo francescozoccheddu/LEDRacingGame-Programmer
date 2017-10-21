@@ -43,8 +43,8 @@ ApplicationWindow {
         target: serialIO
         onError: {
             serialErrorDialog.visible = true
-            serialErrorDialog.text = "Error code " + code
-            serialErrorDialog.informativeText = message
+            serialErrorDialog.text = message
+            serialErrorDialog.informativeText = messageExt
         }
     }
 
