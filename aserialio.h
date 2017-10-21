@@ -11,23 +11,14 @@ class ASerialIO : public QObject
     Q_PROPERTY(QString port READ getPort WRITE setPort NOTIFY portChanged)
     Q_PROPERTY(QStringList portList READ getPortList NOTIFY portListChanged)
     Q_PROPERTY(bool open READ isOpen WRITE setOpen NOTIFY openChanged)
-    Q_PROPERTY(qreal progress READ getProgress NOTIFY progressChanged)
-    Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
 
     QStringList portList;
     QSerialPort serialPort;
 
-    QList<int> dataBytes;
-    int dataCounter;
-    bool writing;
-    bool busy;
-
 private slots:
-    void emitError(QSerialPort::SerialPortError code);
+    void parseError(QSerialPort::SerialPortError code);
 
     void readyToRead();
-
-    void processIncoming(char data);
 
 public:
     ASerialIO();
@@ -48,24 +39,9 @@ public:
         return serialPort.isOpen();
     }
 
-    qreal getProgress() const
-    {
-        if (writing)
-            return dataCounter / (float) dataBytes.length();
-        else
-            return dataBytes.length() / (float) dataCounter;
-    }
-
-    bool isBusy() const
-    {
-        return busy;
-    }
-
     Q_INVOKABLE void refreshPortList();
 
-    Q_INVOKABLE void write(int address, QList<int> bytes);
-
-    Q_INVOKABLE void read(int address, int byteCount);
+    Q_INVOKABLE void write(int data);
 
 signals:
 
@@ -73,38 +49,25 @@ signals:
 
     void portListChanged(QStringList portList);
 
-    void connectedChanged(bool connected);
-
     void openChanged(bool open);
-
-    void progressChanged(qreal progress);
-
-    void busyChanged(bool busy);
 
     void error(QString message, QString messageExt = QString());
 
-    void readCompleted(QList<int> bytes);
+    void incoming(int data);
 
 public slots:
-void setPort(QString _port)
-{
+void setPort(QString _port) {
     if (_port == getPort())
         return;
     serialPort.setPortName(_port);
     emit portChanged(getPort());
 }
 
-void setOpen(bool _opened)
-{
+void setOpen(bool _opened) {
     if (_opened == isOpen())
         return;
-    if (_opened) {
-        busy = true;
-        dataCounter = 0;
-        dataBytes.clear();
-        emit busyChanged(isBusy());
+    if (_opened)
         serialPort.open(QSerialPort::ReadWrite);
-    }
     else
         serialPort.close();
     emit openChanged(isOpen());

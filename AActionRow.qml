@@ -16,14 +16,14 @@ RowLayout {
 
     AButton {
         id: btLoad
-        enabled: serialIO.open
+        enabled: serialIO.open && !serialTask.isBusy()
         text: qsTr("Load")
         onClicked: root.load()
     }
 
     AButton {
         id: btStore
-        enabled: serialIO.open
+        enabled: serialIO.open && !serialTask.isBusy()
         text: qsTr("Store")
         onClicked: root.store()
     }

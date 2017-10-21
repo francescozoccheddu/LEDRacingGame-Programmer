@@ -20,6 +20,7 @@ ColumnLayout {
     }
 
     AParameterPanel {
+        enabled: !serialTask.isBusy()
         Layout.preferredHeight: 65535
         Layout.fillHeight: true
         Layout.preferredWidth: 65535

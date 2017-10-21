@@ -4,35 +4,26 @@
 
 #include <QDebug>
 
-void ASerialIO::emitError(QSerialPort::SerialPortError code)
+void ASerialIO::parseError(QSerialPort::SerialPortError code)
 {
     if (code != QSerialPort::SerialPortError::NoError)
-        emit error("Error code" + serialPort.error(), serialPort.errorString());
+        emit error("Error code " + serialPort.error(), serialPort.errorString());
 }
 
 void ASerialIO::readyToRead()
 {
+    char data;
     qint64 size = serialPort.bytesAvailable();
-    while (size-- > 0){
-        char data;
-        qint64 res = serialPort.read(&data, 1);
-        if (data == 1)
-            processIncoming(data);
-    }
-}
-
-void ASerialIO::processIncoming(char data)
-{
-    if (busy) {
-
-    }
+    qint64 res = serialPort.read(&data, size);
+    if (res == size && res > 0)
+        emit incoming(data);
     else
-        emit error("Unexpected incoming data");
+        emit error("Read error", QString("Read returned %1 (%2 bytes available)").arg(res,size));
 }
 
 ASerialIO::ASerialIO()
 {
-    QObject::connect(&serialPort, &QSerialPort::errorOccurred, this, &ASerialIO::emitError);
+    QObject::connect(&serialPort, &QSerialPort::errorOccurred, this, &ASerialIO::parseError);
     QObject::connect(&serialPort, &QSerialPort::readyRead, this, &ASerialIO::readyToRead);
 }
 
@@ -51,25 +42,10 @@ void ASerialIO::refreshPortList()
     emit portListChanged(getPortList());
 }
 
-void ASerialIO::write(int address, QList<int> bytes)
+void ASerialIO::write(int data)
 {
-    if (busy) {
-        emit error("Serial port busy", "Pending read or write operation");
-        return;
-    }
-    dataBytes = bytes;
-    dataCounter = 0;
-    writing = true;
-}
-
-void ASerialIO::read(int address, int byteCount)
-{
-    if (busy) {
-        emit error("Serial port busy", "Pending read or write operation");
-        return;
-    }
-    if (waiting) {
-        emit error("Serial port not initialized", "Start message not received");
-        return;
-    }
+    char charData = data;
+    qint64 res = serialPort.write(&charData, 1);
+    if (res != 1)
+        emit error("Write error", QString("Write returned %1").arg(res));
 }

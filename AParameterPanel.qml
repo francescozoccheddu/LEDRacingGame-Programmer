@@ -40,11 +40,11 @@ RowLayout {
             loader.item.setParameterValue(eeParameter.defvalue)
         }
         onLoad: {
-            console.log("Load")
+            serialTask.read(eeParameter.address, eeParameter.size, loader.item.setParameterValue)
         }
         onStore: {
-            var val = loader.item.getParameterValue()
-            console.log(val)
+            var vals = loader.item.getParameterValue()
+            serialTask.write(eeParameter.address, ByteList.zeroPad(vals, eeParameter.size))
         }
     }
 
