@@ -11,12 +11,23 @@ class ASerialIO : public QObject
     Q_PROPERTY(QString port READ getPort WRITE setPort NOTIFY portChanged)
     Q_PROPERTY(QStringList portList READ getPortList NOTIFY portListChanged)
     Q_PROPERTY(bool open READ isOpen WRITE setOpen NOTIFY openChanged)
+    Q_PROPERTY(qreal progress READ getProgress NOTIFY progressChanged)
+    Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
 
     QStringList portList;
     QSerialPort serialPort;
 
+    QList<int> dataBytes;
+    int dataCounter;
+    bool writing;
+    bool busy;
+
 private slots:
     void emitError(QSerialPort::SerialPortError code);
+
+    void readyToRead();
+
+    void processIncoming(char data);
 
 public:
     ASerialIO();
@@ -37,7 +48,24 @@ public:
         return serialPort.isOpen();
     }
 
+    qreal getProgress() const
+    {
+        if (writing)
+            return dataCounter / (float) dataBytes.length();
+        else
+            return dataBytes.length() / (float) dataCounter;
+    }
+
+    bool isBusy() const
+    {
+        return busy;
+    }
+
     Q_INVOKABLE void refreshPortList();
+
+    Q_INVOKABLE void write(int address, QList<int> bytes);
+
+    Q_INVOKABLE void read(int address, int byteCount);
 
 signals:
 
@@ -47,11 +75,15 @@ signals:
 
     void connectedChanged(bool connected);
 
-    void error(int code, QString message);
-
     void openChanged(bool open);
 
-    void completed(QList<int> data);
+    void progressChanged(qreal progress);
+
+    void busyChanged(bool busy);
+
+    void error(QString message, QString messageExt = QString());
+
+    void readCompleted(QList<int> bytes);
 
 public slots:
 void setPort(QString _port)
@@ -66,12 +98,18 @@ void setOpen(bool _opened)
 {
     if (_opened == isOpen())
         return;
-    if (_opened)
+    if (_opened) {
+        busy = true;
+        dataCounter = 0;
+        dataBytes.clear();
+        emit busyChanged(isBusy());
         serialPort.open(QSerialPort::ReadWrite);
+    }
     else
         serialPort.close();
     emit openChanged(isOpen());
 }
+
 };
 
 #endif // ASERIALIO_H
