@@ -40,7 +40,7 @@ ApplicationWindow {
 
         function error(message, messageExt) {
             text = message
-            informativeText = messageExt
+            informativeText = typeof messageExt === "undefined" ? "" : messageExt
             visible = true
         }
     }
@@ -54,11 +54,41 @@ ApplicationWindow {
         }
 
         function getProgress() {
-            if (task.busy)
-                return task.writing ? (task.counter / task.data.length) : (task.data.length / task.counter)
-            else
-                return 0
+            if (task.data.length === 0)
+                return timer.progress
+            else {
+                var top = task.writing ? task.data.length : (task.counter + task.data.length)
+                var curr = task.writing ? task.counter : task.data.length
+                var step = 1 / top
+                return (curr / top) + timer.progress * step
+            }
         }
+
+        Timer {
+            id: timer
+            interval: 500
+            repeat: false
+            running: task.busy
+            onTriggered: {
+                serialIO.open = false
+                serialError.error("Request timed out")
+            }
+
+            property real progress
+
+            NumberAnimation on progress{
+                id: timerAnimation
+                from: 0
+                to: 1
+                duration: timer.interval
+            }
+
+            function start() {
+                restart()
+                timerAnimation.restart()
+            }
+        }
+
 
         QtObject {
             id: task
@@ -68,43 +98,84 @@ ApplicationWindow {
             property var data
             property int counter
             property int phase
+            property var onReadyComplete
 
-            function process(data) {
-
+            function process(incoming) {
+                if (writing) {
+                    if (counter < data.length){
+                        switch(phase) {
+                        case 0:
+                            serialIO.write((address + counter) & 0xFF)
+                            break
+                        case 1:
+                            serialIO.write(((address + counter) >> 8) | (1 << 7))
+                            break
+                        case 2:
+                            serialIO.write(data[counter++])
+                            break
+                        }
+                        phase = (phase + 1) % 3
+                    }
+                    else
+                        busy = false
+                }
+                else {
+                    if (phase == 2) {
+                        data.push(incoming)
+                        if (--counter <= 0){
+                            busy = false
+                            onReadyComplete(data)
+                            return
+                        }
+                    }
+                    switch(phase % 2) {
+                    case 0:
+                        serialIO.write((address + data.length) & 0xFF)
+                        phase = 1
+                        break
+                    case 1:
+                        serialIO.write((address + data.length) >> 8)
+                        phase = 2
+                        break
+                    }
+                }
             }
         }
 
         function write(address, data) {
             if (task.busy)
                 throw new Error("Already busy")
-            task.busy = true
             task.writing = true
             task.address = address
             task.data = data
             task.counter = 0
             task.phase = 0
+            task.busy = true
 
-            task.process(data)
+            task.process()
         }
 
         function read(address, size, onReadComplete) {
             if (task.busy)
                 throw new Error("Already busy")
-            task.busy = true
             task.writing = false
             task.address = address
             task.data = []
             task.counter = size
             task.phase = 0
+            task.busy = true
+            task.onReadyComplete = onReadComplete
 
-            task.process(data)
+            task.process()
         }
 
         Connections {
             target: serialIO
             onIncoming: {
-                if (data.lenght === 1 && task.busy)
-                    task.process(data[0]);
+                if (task.busy) {
+                    timer.start()
+                    task.process(data)
+                }
                 else {
                     serialIO.open = false
                     serialError.error("Unexpected data")
@@ -112,10 +183,11 @@ ApplicationWindow {
             }
             onOpenChanged: {
                 if (serialIO.open) {
-                    task.busy = true
                     task.data = []
                     task.counter = 0
                     task.writing = true
+                    task.busy = true
+                    timer.start()
                 }
                 else
                     task.busy = false

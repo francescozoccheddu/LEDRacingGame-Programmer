@@ -50,9 +50,9 @@ ColumnLayout {
         var vals = []
         for (var t = 0; t < tc; t++) {
             var valsPWM = repeaterPWM.itemAt(t).getParameterValue()
-            vals = vals.concat(ByteList.zeroPad(valsPWM, 2))
+            vals.push(ByteList.zeroPad(valsPWM, 2))
             var valsDuration = repeaterDuration.itemAt(t).getParameterValue()
-            vals = vals.concat(ByteList.zeroPad(valsDuration, 2))
+            vals.push(ByteList.zeroPad(valsDuration, 2))
         }
         return vals
     }

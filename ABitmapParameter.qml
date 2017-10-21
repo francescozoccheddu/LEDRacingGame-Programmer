@@ -32,32 +32,45 @@ ColumnLayout {
         }
     }
 
+    function getDot(repeater, index) {
+        if (eeParameterData.horizontaldata)
+            return repeater.itemAt(index)
+        else {
+            var cols = eeParameterData.columns
+            var y = parseInt(index / cols)
+            var x = index % cols
+            return repeater.itemAt(x * cols + y)
+        }
+    }
 
     function getParameterValue() {
         var vals = []
-        var rows = eeParameterData.horizontaldata ? eeParameterData.columns : eeParameterData.rows
-        var cols = eeParameterData.horizontaldata ? eeParameterData.rows : eeParameterData.columns
         for (var bm = 0; bm < eeParameterData.count; bm++) {
-            var bitmap = repeaterBitmap.itemAt(bm);
-            var bc = Math.ceil(rows / 8)
-            for (var dx = 0; dx < cols; dx++) {
-                for (var b = 0; b < bc; b++) {
-                    var val = 0
-                    for (var bi = 0; bi < 8; bi++) {
-                        var dy = b * 8 + bi
-                        var di = eeParameterData.horizontaldata ? (dx * cols + dy) : (dx + dy * cols)
-                        val <<= 1;
-                        val |= dy < rows ? bitmap.repeaterDot.itemAt(di).on : 0
-                    }
-                    vals.push(val)
+            var repeater = repeaterBitmap.itemAt(bm).repeaterDot
+            var dots = eeParameterData.rows * eeParameterData.columns
+            for (var by = 0; by < dots / 8; by++){
+                var val = 0
+                for (var b = 0; b < 8; b++) {
+                    val = (val << 1) | getDot(repeater, by * 8 + b).on
                 }
+                vals.push(val)
             }
         }
         return vals
     }
 
-    function setParameterValue(parameterValue) {
-
+    function setParameterValue(vals) {
+        for (var bm = 0; bm < eeParameterData.count; bm++) {
+            var repeater = repeaterBitmap.itemAt(bm).repeaterDot
+            var dots = eeParameterData.rows * eeParameterData.columns
+            for (var by = 0; by < dots / 8; by++){
+                var val = vals[by]
+                for (var b = 0; b < 8; b++) {
+                    getDot(repeater, by * 8 + b).on = !!(val & (1<<7))
+                    val <<= 1
+                }
+            }
+        }
     }
 
 }
