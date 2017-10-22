@@ -16,17 +16,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     afileio.cpp \
     aserialio.cpp \
-    debug/moc_afileio.cpp \
-    debug/moc_aserialio.cpp \
-    debug/moc_aserialport.cpp \
-    debug/moc_parameterdataobject.cpp \
-    debug/qrc_qml.cpp \
-    afileio.cpp \
-    aserialio.cpp \
-    main.cpp \
-    moc_afileio.cpp \
-    moc_aserialio.cpp \
-    qrc_qml.cpp
 
 RESOURCES += qml.qrc
 
@@ -44,11 +33,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     afileio.h \
     aserialio.h \
-    debug/moc_predefs.h \
-    afileio.h \
-    aserialio.h \
-    moc_predefs.h
 
 DISTFILES += \
     utils/map2json.py \
-    utils/map2json.ps1
+    utils/map2json.ps1 \
+    utils/map2json_batch.py

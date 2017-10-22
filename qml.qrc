@@ -13,5 +13,6 @@
         <file>ABitmapParameter.qml</file>
         <file>ASoundParameter.qml</file>
         <file>ByteList.js</file>
+        <file>eeParameters.json</file>
     </qresource>
 </RCC>

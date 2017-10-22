@@ -62,6 +62,23 @@ def parseFromHex(hexfile, parameters):
             vals += [hexdict[parameter.dict[jsonAddress] + offset]]
         parameter.dict[jsonDefaultValue] = vals
 
+def doJob(mapfile, hexfile, sourcefiles):
+    parameters = parseFromMap(mapfile)
+
+    source = ""
+    for sourcefile in sourcefiles:
+        source += sourcefile.read()
+
+    parseFromSource(source, parameters)
+
+    parseFromHex(hexfile, parameters)
+
+    dicts = []
+    for parameter in parameters:
+        dicts += [parameter.dict]
+    
+    return json.dumps(dicts)
+
 class Parameter:
     def __init__(self, label):
         self.label = label
@@ -69,26 +86,14 @@ class Parameter:
 
 def main():
     args = parseArgs()
-    
-    parameters = parseFromMap(args.mapfile)
+    data = doJob(args.mapfile, args.hexfile, args.sourcefiles)
     args.mapfile.close()
-
-    source = ""
+    args.hexfile.close()
     for sourcefile in args.sourcefiles:
-        source += sourcefile.read()
         sourcefile.close()
 
-    parseFromSource(source, parameters)
-
-    parseFromHex(args.hexfile, parameters)
-
-    dicts = []
-    for parameter in parameters:
-        dicts += [parameter.dict]
-    
-    out = json.dumps(dicts)
-    print(out)
-
+    args.out.write(data)
+    args.out.close()
     return
 
 if __name__ == "__main__":
