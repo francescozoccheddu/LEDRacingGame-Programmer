@@ -50,4 +50,5 @@ HEADERS += \
     moc_predefs.h
 
 DISTFILES += \
-    utils/map2json.py
+    utils/map2json.py \
+    utils/map2json.ps1

@@ -13,11 +13,11 @@ jsonData = "data"
 jsonDefaultValue = "defvalue"
 
 re_search_map_eseg = re.compile(r"ESEG\s*(?P<label>[0-9A-z]\w*)\s*(?P<%s>[0-9A-Fa-f]*)" % jsonAddress) 
-_reb_search_source_name = r"\n[^\S\n]*;[^\S\n]*name=\"(?P<name>[^\n\"]*)\"[^\S\n]*"
-_reb_search_source_descr = r"\n[^\S\n]*;[^\S\n]*description=\"(?P<description>[^\n\"]*)\"[^\S\n]*"
-_reb_search_source_type = r"\n[^\S\n]*;[^\S\n]*type=\"(?P<type>[^\n\"]*)\"[^\S\n]*"
-_reb_search_source_size = r"\n[^\S\n]*;[^\S\n]*size=(?P<size>\d+)[^\S\n]*"
-_reb_search_source_data = r"\n[^\S\n]*;[^\S\n]*data=(?P<data>{[^\n{}]*})[^\S\n]*"
+_reb_search_source_name = r"\n[^\S\n]*;[^\S\n]*name=\"(?P<%s>[^\n\"]*)\"[^\S\n]*" % jsonName
+_reb_search_source_descr = r"\n[^\S\n]*;[^\S\n]*description=\"(?P<%s>[^\n\"]*)\"[^\S\n]*" % jsonDescription
+_reb_search_source_type = r"\n[^\S\n]*;[^\S\n]*type=\"(?P<%s>[^\n\"]*)\"[^\S\n]*" % jsonType
+_reb_search_source_size = r"\n[^\S\n]*;[^\S\n]*size=(?P<%s>\d+)[^\S\n]*" % jsonSize
+_reb_search_source_data = r"\n[^\S\n]*;[^\S\n]*data=(?P<%s>{[^\n]*})[^\S\n]*" % jsonData
 _reb_search_source_label = r"\n[^\S\n]*%s:"
 reb_search_source = _reb_search_source_name + _reb_search_source_descr + _reb_search_source_type + _reb_search_source_size + _reb_search_source_data + _reb_search_source_label
 
@@ -58,7 +58,7 @@ def parseFromHex(hexfile, parameters):
     hexdict = intelhex.IntelHex(hexfile).todict()
     for parameter in parameters:
         vals = []
-        for offset in (0, parameter.dict[jsonSize]):
+        for offset in range(parameter.dict[jsonSize]):
             vals += [hexdict[parameter.dict[jsonAddress] + offset]]
         parameter.dict[jsonDefaultValue] = vals
 
