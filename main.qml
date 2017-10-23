@@ -54,7 +54,7 @@ ApplicationWindow {
         }
 
         function getProgress() {
-            if (task.data.length === 0)
+            if (task.waiting)
                 return timer.progress
             else {
                 var top = task.writing ? task.data.length : (task.counter + task.data.length)
@@ -93,6 +93,7 @@ ApplicationWindow {
         QtObject {
             id: task
             property bool busy
+            property bool waiting
             property bool writing
             property int address
             property var data
@@ -101,42 +102,50 @@ ApplicationWindow {
             property var onReadyComplete
 
             function process(incoming) {
-                if (writing) {
-                    if (counter < data.length){
-                        switch(phase) {
-                        case 0:
-                            serialIO.write((address + counter) & 0xFF)
-                            break
-                        case 1:
-                            serialIO.write(((address + counter) >> 8) | (1 << 7))
-                            break
-                        case 2:
-                            serialIO.write(data[counter++])
-                            break
-                        }
-                        phase = (phase + 1) % 3
-                    }
-                    else
-                        busy = false
+                if (waiting) {
+                    busy = false
+                    waiting = false
                 }
                 else {
-                    if (phase == 2) {
-                        data.push(incoming)
-                        if (--counter <= 0){
-                            busy = false
-                            onReadyComplete(data)
-                            return
+                    if (writing) {
+                        if (counter < data.length){
+                            switch(phase) {
+                            case 0:
+                                serialIO.write((address + counter) & 0xFF)
+                                break
+                            case 1:
+                                serialIO.write(((address + counter) >> 8) | (1 << 7))
+                                break
+                            case 2:
+                                serialIO.write(data[counter++])
+                                break
+                            }
+                            phase = (phase + 1) % 3
+                        }
+                        else {
+                            serialIO.open = false
+                            serialIO.open = true
                         }
                     }
-                    switch(phase % 2) {
-                    case 0:
-                        serialIO.write((address + data.length) & 0xFF)
-                        phase = 1
-                        break
-                    case 1:
-                        serialIO.write((address + data.length) >> 8)
-                        phase = 2
-                        break
+                    else {
+                        if (phase == 2) {
+                            data.push(incoming)
+                            if (--counter <= 0){
+                                busy = false
+                                onReadyComplete(data)
+                                return
+                            }
+                        }
+                        switch(phase % 2) {
+                        case 0:
+                            serialIO.write((address + data.length) & 0xFF)
+                            phase = 1
+                            break
+                        case 1:
+                            serialIO.write((address + data.length) >> 8)
+                            phase = 2
+                            break
+                        }
                     }
                 }
             }
@@ -183,9 +192,7 @@ ApplicationWindow {
             }
             onOpenChanged: {
                 if (serialIO.open) {
-                    task.data = []
-                    task.counter = 0
-                    task.writing = true
+                    task.waiting = true
                     task.busy = true
                     timer.start()
                 }
