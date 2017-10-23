@@ -13,9 +13,14 @@ Item {
 
     Rectangle {
         id: progress
-        color: "red"
+        color: globStyle.accentLight
         height: parent.height
         width: parent.width * (serialTask.isBusy() ? serialTask.getProgress() : 1)
+        opacity: serialTask.isBusy() ? 1 : 0
+
+        Behavior on opacity {
+            OpacityAnimator { duration: 200 }
+        }
     }
 
     ColumnLayout {
@@ -27,7 +32,6 @@ Item {
             ComboBox {
                 id: cbDevice
                 enabled: !serialIO.open
-                opacity: enabled ? 1 : globStyle.disabledOpacity
                 model: {
                     var list = serialIO.portList
                     if (list.length === 0)
@@ -35,6 +39,16 @@ Item {
                     return list
                 }
 
+                property color accentColor: {
+                    if (enabled) {
+                        if (pressed)
+                            return globStyle.accent
+                        else
+                            return globStyle.background
+                    }
+                    else
+                        return globStyle.backgroundFaded
+                }
                 Component.onCompleted: serialIO.refreshPortList()
 
                 delegate: Component {
@@ -45,6 +59,7 @@ Item {
                         MouseArea {
                             id: mouseArea
                             anchors.fill: parent
+                            hoverEnabled: true
                             onClicked: {
                                 cbDevice.currentIndex = index
                                 cbDevice.popup.close()
@@ -52,18 +67,26 @@ Item {
                         }
 
                         Rectangle {
-                            anchors.fill: parent
-                            color: globStyle.accent
-                            visible: mouseArea.pressed
+                            height: parent.height - globStyle.thickness * 2
+                            width: parent.width - globStyle.thickness * 2
+                            x: globStyle.thickness
+                            y: globStyle.thickness
+                            color: {
+                                if (mouseArea.pressed)
+                                    return globStyle.accent
+                                else
+                                    return globStyle.backgroundFaded
+                            }
+                            visible: mouseArea.containsMouse
                         }
 
-                        Text {
+                        ALabel {
                             height: cbDevice.height
                             width: cbDevice.width
                             leftPadding: 20
                             rightPadding: 20
                             text: modelData
-                            font: cbDevice.font
+                            size: 1
                             color: {
                                 if (mouseArea.pressed)
                                     return globStyle.background
@@ -72,9 +95,9 @@ Item {
                                 else
                                     return globStyle.foreground
                             }
-                            horizontalAlignment: Text.AlignLeft
-                            verticalAlignment: Text.AlignVCenter
-                            elide: Text.ElideRight
+                            horizontalAlignment: Label.AlignLeft
+                            verticalAlignment: Label.AlignVCenter
+                            elide: Label.ElideRight
                         }
                     }
                 }
@@ -99,29 +122,37 @@ Item {
                         context.lineTo(width, height);
                         context.lineTo(width / 2, 0);
                         context.closePath();
-                        context.fillStyle = cbDevice.pressed  ? globStyle.accent : globStyle.background;
+                        context.fillStyle = cbDevice.accentColor;
                         context.fill();
                     }
                 }
 
-                contentItem: Text {
+                contentItem: ALabel {
                     leftPadding: 20
                     rightPadding: cbDevice.indicator.width + cbDevice.spacing
                     visible: !cbDevice.popup.visible
                     text: cbDevice.displayText
-                    font: cbDevice.font
-                    color: cbDevice.pressed  ? globStyle.accent : globStyle.background
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
+                    color: cbDevice.accentColor
+                    horizontalAlignment: Label.AlignLeft
+                    verticalAlignment: Label.AlignVCenter
+                    elide: Label.ElideRight
                 }
 
                 background: Rectangle {
                     visible: !cbDevice.popup.visible
                     implicitWidth: 120
                     implicitHeight: 40
-                    color: cbDevice.pressed ? globStyle.background : globStyle.accent
-                    border.color: cbDevice.pressed  ? globStyle.accent : globStyle.background
+                    color: {
+                        if (cbDevice.pressed)
+                            return globStyle.background
+                        else {
+                            if (cbDevice.hovered)
+                                return globStyle.accentLight
+                            else
+                                return globStyle.accent
+                        }
+                    }
+                    border.color: cbDevice.accentColor
                     border.width: globStyle.thickness
                 }
 
@@ -153,6 +184,8 @@ Item {
                 text: qsTr("Connect")
                 backgroundColor: globStyle.accent
                 foregroundColor: globStyle.background
+                selectedBackgroundColor: globStyle.accentLight
+                disabledForegroundColor: globStyle.backgroundFaded
                 onClicked: {
                     serialIO.port = cbDevice.currentText
                     serialIO.open = true
@@ -164,10 +197,17 @@ Item {
                 text: qsTr("Disconnect")
                 backgroundColor: globStyle.accent
                 foregroundColor: globStyle.background
+                selectedBackgroundColor: globStyle.accentLight
+                disabledForegroundColor: globStyle.backgroundFaded
                 onClicked: {
                     serialIO.open = false
                 }
             }
+
+            ALabel {
+
+            }
+
         }
 
     }
