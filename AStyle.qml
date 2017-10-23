@@ -5,9 +5,10 @@ QtObject {
     property color backgroundFaded: Qt.lighter(background)
     property color accent: "#0F0"
     property color accentFaded: Qt.darker(accent)
+    property color accentLight: Qt.lighter(accent)
     property color foreground: "#AAA"
     property color foregroundFaded: Qt.darker(foreground)
-    property int fontSize: size / 4
+    property int fontSize: size * 0.2
     property int spacing: 10
     property real size: 40
     property real radius: 4

@@ -13,6 +13,8 @@ RowLayout {
         onClicked: root.restore()
         backgroundColor: globStyle.background
         foregroundColor: globStyle.accent
+        selectedBackgroundColor: globStyle.backgroundFaded
+        disabledForegroundColor: globStyle.accentFaded
         text: qsTr("Restore")
     }
 
@@ -23,6 +25,8 @@ RowLayout {
         text: qsTr("Load")
         backgroundColor: globStyle.background
         foregroundColor: globStyle.accent
+        selectedBackgroundColor: globStyle.backgroundFaded
+        disabledForegroundColor: globStyle.accentFaded
     }
 
     AButton {
@@ -32,5 +36,7 @@ RowLayout {
         onClicked: root.store()
         backgroundColor: globStyle.background
         foregroundColor: globStyle.accent
+        selectedBackgroundColor: globStyle.backgroundFaded
+        disabledForegroundColor: globStyle.accentFaded
     }
 }

@@ -5,8 +5,19 @@ Button {
 
     property color foregroundColor
     property color backgroundColor
-    property color selectedBackgroundColor: Qt.lighter(backgroundColor)
-    property color disabledForegroundColor: Qt.darker(foregroundColor)
+    property color selectedBackgroundColor
+    property color disabledForegroundColor
+
+    property color accentColor: {
+        if (enabled) {
+            if (button.down)
+                return backgroundColor
+            else
+                return foregroundColor
+        }
+        else
+            return disabledForegroundColor
+    }
 
     id: button
 
@@ -23,15 +34,15 @@ Button {
                     return backgroundColor
             }
         }
-        border.color: button.down ? backgroundColor : foregroundColor
+        border.color: accentColor
         border.width: globStyle.thickness
     }
 
-    contentItem: Text {
+    contentItem: ALabel {
         text: button.text
-        color: button.down ? backgroundColor : foregroundColor
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        elide: Text.ElideRight
+        color: accentColor
+        horizontalAlignment: Label.AlignHCenter
+        verticalAlignment: Label.AlignVCenter
+        elide: Label.ElideRight
     }
 }
