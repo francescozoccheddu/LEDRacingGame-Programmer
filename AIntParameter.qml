@@ -14,7 +14,7 @@ RowLayout {
     }
 
     Label {
-        text: eeParameterData.unit !== 'undefined' ? eeParameterData.unit : ""
+        text: typeof eeParameterData.unit !== 'undefined' ? eeParameterData.unit : ""
     }
 
     function getParameterValue() {

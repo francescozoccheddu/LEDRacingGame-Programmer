@@ -7,6 +7,19 @@ RowLayout {
     id: root
     property var eeParameter
 
+    function restore() {
+        loader.item.setParameterValue(eeParameter.defvalue.slice())
+    }
+
+    function store() {
+        var vals = loader.item.getParameterValue()
+        serialTask.write(eeParameter.address, ByteList.zeroPad(vals, eeParameter.size))
+    }
+
+    function load() {
+        serialTask.read(eeParameter.address, eeParameter.size, loader.item.setParameterValue)
+    }
+
     function getParameterQML(type) {
         switch (type) {
             case "int":
@@ -29,24 +42,10 @@ RowLayout {
 
             onLoaded: {
                 item.eeParameterData = eeParameter.data
-                item.setParameterValue(eeParameter.defvalue.slice())
+                restore()
             }
         }
 
-    }
-
-    AActionRow {
-        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-        onRestore: {
-            loader.item.setParameterValue(eeParameter.defvalue.slice())
-        }
-        onLoad: {
-            serialTask.read(eeParameter.address, eeParameter.size, loader.item.setParameterValue)
-        }
-        onStore: {
-            var vals = loader.item.getParameterValue()
-            serialTask.write(eeParameter.address, ByteList.zeroPad(vals, eeParameter.size))
-        }
     }
 
 }

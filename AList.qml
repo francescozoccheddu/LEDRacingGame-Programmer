@@ -10,7 +10,6 @@ ListView {
     delegate: Component {
         AListDelegate {
             eeParameter: modelData
-            height: 200
             width: parent.width
         }
     }
