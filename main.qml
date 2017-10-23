@@ -15,11 +15,12 @@ ApplicationWindow {
 
         AList {
             id: parSelector
-            model: JSON.parse(fileIO.read("eeParameters.json"))
+            model: JSON.parse(fileIO.read(":/eeParameters.json"))
             Layout.preferredHeight: 65535
             Layout.preferredWidth: 65535
             Layout.fillHeight: true
             Layout.fillWidth: true
+            Layout.margins: 10
         }
 
         ADeviceBar {

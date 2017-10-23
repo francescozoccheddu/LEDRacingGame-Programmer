@@ -11,15 +11,11 @@ ListView {
     delegate: Component {
         AListDelegate {
             eeParameter: modelData
-            Layout.preferredWidth: 65535
-            Layout.fillWidth: true
+            width: root.width
             list: root
         }
     }
 
-    Behavior on height {
-        NumberAnimation { duration: 300; easing.type: Easing.OutBack }
-    }
     onCurrentItemChanged: {
     }
 

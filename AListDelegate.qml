@@ -6,8 +6,6 @@ ColumnLayout {
     id: root
     property var eeParameter
     property var list
-    Layout.preferredWidth: 65535
-    Layout.fillWidth: true
 
     RowLayout {
         Layout.preferredWidth: 65535
@@ -16,6 +14,8 @@ ColumnLayout {
         ColumnLayout {
             id: colLabels
             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            Layout.topMargin: 10
+            Layout.bottomMargin: 10
             height: 20
             spacing: 0
 
@@ -60,6 +60,7 @@ ColumnLayout {
     }
 
     AParameterPanel {
+        load: list.currentIndex === index
         visible: list.currentIndex === index
         id: panel
         enabled: !serialTask.isBusy()
