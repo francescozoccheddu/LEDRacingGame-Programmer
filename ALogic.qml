@@ -19,6 +19,21 @@ Item {
         }
     }
 
+    function describe() {
+        if (task.busy) {
+            if (task.waiting)
+                return "Waiting for start message"
+            else {
+                if (task.writing)
+                    return "%1 of %2 bytes written to address %3".arg(task.counter, task.data.length, task.address)
+                else
+                    return "%1 of %2 bytes read from address %3".arg(task.data.length, task.counter + task.data.length, task.address)
+            }
+        }
+        else
+            return serialIO.open ? "Connected" : "Disconnected"
+    }
+
     Timer {
         id: timer
         interval: 500

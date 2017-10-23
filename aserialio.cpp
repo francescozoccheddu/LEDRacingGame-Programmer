@@ -49,3 +49,8 @@ void ASerialIO::write(int data)
     if (res != 1)
         emit error("Write error", QString("Write returned %1").arg(res));
 }
+
+QString ASerialIO::describe(QString port)
+{
+    return QSerialPortInfo(port).description();
+}

@@ -21,7 +21,10 @@ ApplicationWindow {
             Layout.preferredWidth: 65535
             Layout.fillHeight: true
             Layout.fillWidth: true
-            Layout.margins: 10
+            Layout.leftMargin: 0
+            Layout.topMargin: 10
+            Layout.rightMargin: 0
+            Layout.bottomMargin: 10
         }
 
         ADeviceBar {
