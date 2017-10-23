@@ -9,7 +9,7 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Hello World")
-    color: style.background
+    color: globStyle.background
 
     ColumnLayout {
         anchors.fill: parent
@@ -33,7 +33,6 @@ ApplicationWindow {
         }
     }
 
-
     MessageDialog {
         id: serialError
         title: "Serial port error"
@@ -52,7 +51,7 @@ ApplicationWindow {
     }
 
     AStyle {
-        id: style
+        id: globStyle
     }
 
 }

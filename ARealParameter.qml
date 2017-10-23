@@ -30,7 +30,7 @@ RowLayout {
         }
     }
 
-    Label {
+    ALabel {
         text: eeParameterData.unit !== 'undefined' ? eeParameterData.unit : ""
     }
 

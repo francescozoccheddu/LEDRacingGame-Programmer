@@ -10,15 +10,19 @@ RowLayout {
 
     AButton {
         id: btRestore
-        text: qsTr("Restore")
         onClicked: root.restore()
+        backgroundColor: globStyle.background
+        foregroundColor: globStyle.accent
+        text: qsTr("Restore")
     }
 
     AButton {
         id: btLoad
         enabled: serialIO.open && !serialTask.isBusy()
-        text: qsTr("Load")
         onClicked: root.load()
+        text: qsTr("Load")
+        backgroundColor: globStyle.background
+        foregroundColor: globStyle.accent
     }
 
     AButton {
@@ -26,5 +30,7 @@ RowLayout {
         enabled: serialIO.open && !serialTask.isBusy()
         text: qsTr("Store")
         onClicked: root.store()
+        backgroundColor: globStyle.background
+        foregroundColor: globStyle.accent
     }
 }

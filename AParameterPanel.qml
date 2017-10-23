@@ -7,6 +7,7 @@ RowLayout {
     id: root
     property var eeParameter
     property alias load: loader.active
+    property var loaderValue: eeParameter.defvalue
 
     function restore() {
         loader.item.setParameterValue(eeParameter.defvalue.slice())
@@ -19,6 +20,10 @@ RowLayout {
 
     function load() {
         serialTask.read(eeParameter.address, eeParameter.size, loader.item.setParameterValue)
+    }
+
+    function backup() {
+        loaderValue = loader.item.getParameterValue()
     }
 
     function getParameterQML(type) {
@@ -45,10 +50,12 @@ RowLayout {
 
             onLoaded: {
                 item.eeParameterData = eeParameter.data
-                restore()
+                item.setParameterValue(loaderValue)
             }
         }
 
+
     }
+
 
 }

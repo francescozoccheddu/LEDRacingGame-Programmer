@@ -6,6 +6,7 @@ ColumnLayout {
     id: root
     property var eeParameter
     property var list
+    property bool isCurrent: list.currentIndex === index
 
     RowLayout {
         Layout.preferredWidth: 65535
@@ -19,15 +20,18 @@ ColumnLayout {
             height: 20
             spacing: 0
 
-            Label {
+            ALabel {
                 text: eeParameter.name
-                font.pointSize: 16
+                size: 1.5
+                color: isCurrent ? globStyle.accent : globStyle.foreground
                 PropertyAnimation on y { duration: 1000 }
             }
 
-            Label {
+            ALabel {
                 id: description
                 text: eeParameter.description
+                size: 1
+                color: isCurrent ? globStyle.accent : globStyle.foreground
                 visible: list.currentIndex === index
             }
         }
@@ -39,13 +43,13 @@ ColumnLayout {
             Layout.fillHeight: false
             Layout.fillWidth: true
             onClicked: {
-                list.currentIndex = index
+                list.changeIndex(index)
             }
         }
 
         AActionRow {
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-            visible: list.currentIndex === index
+            visible: isCurrent
             onRestore: {
                 panel.restore()
             }
@@ -59,10 +63,18 @@ ColumnLayout {
 
     }
 
+    Connections {
+        target: list
+        onBeforeIndexChange: {
+            if (isCurrent)
+                panel.backup()
+        }
+    }
+
     AParameterPanel {
-        load: list.currentIndex === index
-        visible: list.currentIndex === index
         id: panel
+        load: isCurrent
+        visible: isCurrent
         enabled: !serialTask.isBusy()
         Layout.preferredWidth: 65535
         Layout.fillWidth: true
