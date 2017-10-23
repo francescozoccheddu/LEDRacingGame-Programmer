@@ -13,7 +13,7 @@ RowLayout {
         editable: true
     }
 
-    Label {
+    ALabel {
         text: typeof eeParameterData.unit !== 'undefined' ? eeParameterData.unit : ""
     }
 

@@ -26,7 +26,7 @@ Flow {
                     width: 20
                     height: width
                     radius: width / 2
-                    color: on ? "red" : "black"
+                    color: on ? globStyle.accent : "black"
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {

@@ -7,6 +7,7 @@ ListView {
     currentIndex: 0
     focus: true
     highlightFollowsCurrentItem: false
+    signal beforeIndexChange()
 
     delegate: Component {
         AListDelegate {
@@ -16,7 +17,9 @@ ListView {
         }
     }
 
-    onCurrentItemChanged: {
+    function changeIndex(index) {
+        beforeIndexChange()
+        currentIndex = index
     }
 
     ScrollIndicator.vertical: ScrollIndicator {}
