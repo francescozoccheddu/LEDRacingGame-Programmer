@@ -6,6 +6,7 @@ import "ByteList.js" as ByteList
 RowLayout {
     id: root
     property var eeParameter
+    property alias load: loader.active
 
     function restore() {
         loader.item.setParameterValue(eeParameter.defvalue.slice())
