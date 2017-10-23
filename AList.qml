@@ -14,6 +14,7 @@ ListView {
             eeParameter: modelData
             width: root.width
             list: root
+            enabled: !serialTask.isBusy()
         }
     }
 
@@ -22,6 +23,22 @@ ListView {
         currentIndex = index
     }
 
-    ScrollIndicator.vertical: ScrollIndicator {}
+    ScrollBar.vertical: ScrollBar {
+        id: control
+        contentItem: Rectangle {
+            implicitWidth: 6
+            implicitHeight: 100
+            color: {
+                if (control.pressed)
+                    return globStyle.accent
+                else {
+                    if (control.hovered)
+                        return globStyle.foreground
+                    else
+                        return globStyle.foregroundFaded
+                }
+            }
+        }
+    }
 
 }

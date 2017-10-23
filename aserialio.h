@@ -43,6 +43,8 @@ public:
 
     Q_INVOKABLE void write(int data);
 
+    Q_INVOKABLE QString describe(QString port);
+
 signals:
 
     void portChanged(QString port);

@@ -203,9 +203,19 @@ Item {
                     serialIO.open = false
                 }
             }
+            Column {
+                Layout.leftMargin: 5
+                ALabel {
+                    text: serialTask.describe()
+                    color: globStyle.background
+                    size: 1
+                }
 
-            ALabel {
-
+                ALabel {
+                    text: serialIO.describe(cbDevice.currentText)
+                    color: globStyle.background
+                    size: 0.8
+                }
             }
 
         }
