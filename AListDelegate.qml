@@ -5,23 +5,47 @@ import QtQuick.Layouts 1.3
 ColumnLayout {
     id: root
     property var eeParameter
-    height: row.height + panel.height + spacing * 2
+    property var list
+    Layout.preferredWidth: 65535
+    Layout.fillWidth: true
 
     RowLayout {
-        id: row
         Layout.preferredWidth: 65535
         Layout.fillWidth: true
+        id: row
         ColumnLayout {
+            id: colLabels
+            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            height: 20
+            spacing: 0
+
             Label {
                 text: eeParameter.name
+                font.pointSize: 16
+                PropertyAnimation on y { duration: 1000 }
             }
+
             Label {
-                text: typeof eeParameter.description == "undefined" ? "" : eeParameter.description
+                id: description
+                text: eeParameter.description
+                visible: list.currentIndex === index
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            width: colLabels.width
+            height: colLabels.height
+            Layout.fillHeight: false
+            Layout.fillWidth: true
+            onClicked: {
+                list.currentIndex = index
             }
         }
 
         AActionRow {
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+            visible: list.currentIndex === index
             onRestore: {
                 panel.restore()
             }
@@ -32,9 +56,11 @@ ColumnLayout {
                 panel.store()
             }
         }
+
     }
 
     AParameterPanel {
+        visible: list.currentIndex === index
         id: panel
         enabled: !serialTask.isBusy()
         Layout.preferredWidth: 65535

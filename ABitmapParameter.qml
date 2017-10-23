@@ -2,8 +2,10 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
-ColumnLayout {
+Flow {
     property var eeParameterData
+    spacing: 20
+    flow: Flow.LeftToRight
     Repeater {
         id: repeaterBitmap
         model: eeParameterData.count
@@ -11,6 +13,10 @@ ColumnLayout {
             flow: eeParameterData.horizontaldata ? GridLayout.LeftToRight : GridLayout.TopToBottom
             rows: eeParameterData.rows
             columns: eeParameterData.columns
+            rowSpacing: 3
+            columnSpacing: 3
+            width: (20 + rowSpacing) * columns
+            height: (20 + columnSpacing) * rows
             property alias repeaterDot: repeaterDot
             Repeater {
                 id: repeaterDot

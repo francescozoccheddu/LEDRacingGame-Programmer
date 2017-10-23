@@ -7,7 +7,7 @@
 void ASerialIO::parseError(QSerialPort::SerialPortError code)
 {
     if (code != QSerialPort::SerialPortError::NoError)
-        emit error("Error code " + serialPort.error(), serialPort.errorString());
+        emit error(QString("Error code %1").arg(serialPort.error()), serialPort.errorString());
 }
 
 void ASerialIO::readyToRead()

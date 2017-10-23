@@ -39,6 +39,8 @@ RowLayout {
         Loader {
             id: loader
             source: getParameterQML(eeParameter.type)
+            Layout.preferredWidth: 65535
+            Layout.fillWidth: true
 
             onLoaded: {
                 item.eeParameterData = eeParameter.data

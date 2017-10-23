@@ -103,8 +103,14 @@ ApplicationWindow {
 
             function process(incoming) {
                 if (waiting) {
-                    busy = false
-                    waiting = false
+                    if (incoming !== 0) {
+                        serialIO.open = false
+                        serialError.error("Opening failed", "Unknown start code message")
+                    }
+                    else {
+                        busy = false
+                        waiting = false
+                    }
                 }
                 else {
                     if (writing) {
