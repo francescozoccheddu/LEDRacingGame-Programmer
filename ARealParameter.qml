@@ -13,6 +13,46 @@ RowLayout {
         onValueChanged: {
             textField.text = value.toFixed(3)
         }
+        property color accentColor: {
+            if (enabled)
+                return globStyle.accent
+            else
+                return globStyle.accentFaded
+        }
+
+        background: Rectangle {
+            x: slider.leftPadding
+            y: slider.topPadding + slider.availableHeight / 2 - height / 2
+            implicitWidth: 200
+            implicitHeight: 4
+            width: slider.availableWidth
+            height: implicitHeight
+            color: slider.accentColor
+
+            Rectangle {
+                width: slider.visualPosition * parent.width
+                height: parent.height
+                color: slider.accentColor
+            }
+        }
+
+        handle: Rectangle {
+            x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
+            y: slider.topPadding + slider.availableHeight / 2 - height / 2
+            implicitWidth: 26
+            implicitHeight: 26
+            radius: 13
+            color:{
+                if (slider.pressed)
+                    return globStyle.accent
+                else if (slider.hovered)
+                    return globStyle.backgroundFaded
+                else
+                    return globStyle.background
+            }
+            border.color: slider.pressed ? globStyle.background : slider.accentColor
+            border.width: globStyle.thickness
+        }
     }
 
     TextField {
