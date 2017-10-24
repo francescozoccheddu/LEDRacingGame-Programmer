@@ -47,15 +47,15 @@ RowLayout {
             source: getParameterQML(eeParameter.type)
             Layout.preferredWidth: 65535
             Layout.fillWidth: true
+            asynchronous: true
 
             onLoaded: {
                 item.eeParameterData = eeParameter.data
                 item.setParameterValue(loaderValue)
             }
+
         }
 
-
     }
-
 
 }
