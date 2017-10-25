@@ -17,6 +17,5 @@
         <file>AStyle.qml</file>
         <file>ALogic.qml</file>
         <file>ALabel.qml</file>
-        <file>ABarButton.qml</file>
     </qresource>
 </RCC>

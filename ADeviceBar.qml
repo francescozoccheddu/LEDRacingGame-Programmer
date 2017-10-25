@@ -140,8 +140,8 @@ Item {
 
                 background: Rectangle {
                     visible: !cbDevice.popup.visible
-                    implicitWidth: 120
-                    implicitHeight: 40
+                    implicitWidth: globStyle.size * 3
+                    implicitHeight: globStyle.size
                     color: {
                         if (cbDevice.pressed)
                             return globStyle.background
@@ -149,7 +149,7 @@ Item {
                             if (cbDevice.hovered)
                                 return globStyle.accentLight
                             else
-                                return globStyle.accent
+                                return "transparent"
                         }
                     }
                     border.color: cbDevice.accentColor

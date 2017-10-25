@@ -31,7 +31,7 @@ Button {
                 if (button.hovered)
                     return selectedBackgroundColor
                 else
-                    return backgroundColor
+                    return "transparent"
             }
         }
         border.color: accentColor

@@ -23,7 +23,8 @@ RowLayout {
     }
 
     function backup() {
-        loaderValue = loader.item.getParameterValue()
+        var itemValue = loader.item.getParameterValue()
+        loaderValue = ByteList.zeroPad(itemValue, eeParameter.size)
     }
 
     function getParameterQML(type) {

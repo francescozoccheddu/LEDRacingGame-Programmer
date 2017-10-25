@@ -40,7 +40,6 @@ RowLayout {
                     text: eeParameter.name
                     size: 1.5
                     color: isCurrent ? globStyle.accent : globStyle.foreground
-                    PropertyAnimation on y { duration: 1000 }
                 }
 
                 ALabel {
