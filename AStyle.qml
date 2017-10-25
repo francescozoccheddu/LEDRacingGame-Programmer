@@ -11,7 +11,7 @@ QtObject {
     property color foregroundFaded: Qt.darker(foreground)
     property int fontSize: size * 0.25
     property int spacing: size * 0.3
-    property real size: 35
+    property real size: isAndroid ? 25 : 35
     property real radius: 4
-    property real thickness: 1
+    property real thickness: size * 0.03
 }
