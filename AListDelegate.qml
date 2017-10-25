@@ -9,11 +9,11 @@ RowLayout {
     property bool isCurrent: list.currentIndex === index
 
     Rectangle {
-        Layout.preferredWidth: (isCurrent || mouseArea.containsMouse) ? globStyle.spacing : 0
+        Layout.preferredWidth: (isCurrent || mouseArea.containsMouse) ? globStyle.size * 0.25 : 0
         color: isCurrent ? globStyle.accent : globStyle.foreground
         Layout.fillHeight: true
         Layout.fillWidth: false
-        Layout.rightMargin: globStyle.spacing
+        Layout.rightMargin: globStyle.size * 0.25
         Behavior on Layout.preferredWidth {
             NumberAnimation { duration: 100 }
         }
@@ -21,11 +21,12 @@ RowLayout {
 
     ColumnLayout {
         id: colRoot
-        Layout.bottomMargin: globStyle.spacing
+        Layout.bottomMargin: globStyle.size * 0.25
+        Layout.rightMargin: isAndroid ? 0 : (globStyle.size * 0.2)
         RowLayout {
             Layout.preferredWidth: 65535
             Layout.fillWidth: true
-            Layout.rightMargin: globStyle.spacing
+            Layout.rightMargin: globStyle.size * 0.25
             id: row
 
             ColumnLayout {
@@ -77,14 +78,6 @@ RowLayout {
                 }
             }
 
-        }
-
-        Connections {
-            target: list
-            onBeforeIndexChange: {
-                if (isCurrent)
-                    panel.backup()
-            }
         }
 
         AParameterPanel {

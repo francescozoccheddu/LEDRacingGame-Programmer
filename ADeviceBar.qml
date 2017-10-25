@@ -27,7 +27,7 @@ Item {
         id: column
 
         RowLayout {
-            Layout.margins: globStyle.spacing
+            Layout.margins: globStyle.size * 0.3
 
             ComboBox {
                 id: cbDevice
