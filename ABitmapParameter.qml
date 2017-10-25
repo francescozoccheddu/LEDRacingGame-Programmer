@@ -10,25 +10,39 @@ Flow {
         id: repeaterBitmap
         model: eeParameterData.count
         GridLayout {
+            property real dotSize: globStyle.size * 0.5
             flow: eeParameterData.horizontaldata ? GridLayout.LeftToRight : GridLayout.TopToBottom
             rows: eeParameterData.rows
             columns: eeParameterData.columns
-            rowSpacing: 3
-            columnSpacing: 3
-            width: (20 + rowSpacing) * columns
-            height: (20 + columnSpacing) * rows
+            rowSpacing: globStyle.size * 0.05
+            columnSpacing: rowSpacing
+            width: (dotSize + rowSpacing) * columns
+            height: (dotSize + columnSpacing) * rows
             property alias repeaterDot: repeaterDot
             Repeater {
                 id: repeaterDot
                 model: eeParameterData.rows * eeParameterData.columns
                 Rectangle {
                     property bool on: false
-                    width: 20
+                    width: dotSize
                     height: width
                     radius: width / 2
-                    color: on ? globStyle.accent : "black"
+                    color: {
+                        if (enabled) {
+                            if (on)
+                                return mouseArea.containsMouse ? globStyle.accentLight : globStyle.accent
+                            else
+                                return mouseArea.containsMouse ? globStyle.foreground : globStyle.backgroundFaded
+                        }
+                        else
+                            return on ? globStyle.accentFaded : globStyle.foregroundFaded
+                    }
+                    border.width: globStyle.thickness
+                    border.color: mouseArea.pressed ? globStyle.background : color
                     MouseArea {
+                        id: mouseArea
                         anchors.fill: parent
+                        hoverEnabled: true
                         onClicked: {
                             on = !on
                         }

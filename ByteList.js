@@ -9,8 +9,8 @@ function fromInt(val) {
     return vals
 }
 
-function zeroPad(vals, lenght) {
-    while (vals.length < lenght)
+function zeroPad(vals, length) {
+    while (vals.length < length)
         vals.push(0)
     return vals
 }

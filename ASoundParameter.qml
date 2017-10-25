@@ -14,32 +14,24 @@ ColumnLayout {
         }
     }
 
-    Row {
+    RowLayout {
         visible: ByteList.toInt(ticks.getParameterValue()) > 0
 
-        GroupBox {
-            title: qsTr("PWM")
-            ColumnLayout {
-                anchors.fill: parent
-                Repeater {
-                    id: repeaterPWM
-                    model: ByteList.toInt(ticks.getParameterValue())
-                    ARealParameter {
-                        eeParameterData: root.eeParameterData.pwm
-                    }
+        ColumnLayout {
+            Repeater {
+                id: repeaterPWM
+                model: ByteList.toInt(ticks.getParameterValue())
+                ARealParameter {
+                    eeParameterData: root.eeParameterData.pwm
                 }
             }
         }
-        GroupBox {
-            title: qsTr("Duration")
-            ColumnLayout {
-                anchors.fill: parent
-                Repeater {
-                    id: repeaterDuration
-                    model: ByteList.toInt(ticks.getParameterValue())
-                    ARealParameter {
-                        eeParameterData: root.eeParameterData.duration
-                    }
+        ColumnLayout {
+            Repeater {
+                id: repeaterDuration
+                model: ByteList.toInt(ticks.getParameterValue())
+                ARealParameter {
+                    eeParameterData: root.eeParameterData.duration
                 }
             }
         }

@@ -3,14 +3,15 @@ import QtQuick 2.0
 QtObject {
     property color background: "#222"
     property color backgroundFaded: Qt.lighter(background)
-    property color accent: "#0F0"
+    property color backgroundDarker: Qt.darker(background)
+    property color accent: "#F00"
     property color accentFaded: Qt.darker(accent)
     property color accentLight: Qt.lighter(accent)
     property color foreground: "#AAA"
     property color foregroundFaded: Qt.darker(foreground)
-    property int fontSize: size * 0.2
-    property int spacing: 10
-    property real size: 40
+    property int fontSize: size * 0.25
+    property int spacing: size * 0.3
+    property real size: 35
     property real radius: 4
-    property real thickness: 2
+    property real thickness: 1
 }

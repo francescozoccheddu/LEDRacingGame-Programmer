@@ -5,105 +5,143 @@ import "ByteList.js" as ByteList
 
 RowLayout {
     property var eeParameterData;
+    RowLayout {
 
-    SpinBox {
-        id: spinbox
-        from: eeParameterData.from
-        to: eeParameterData.to
-        editable: true
-        property color accentColor: {
-            if (enabled)
-                return globStyle.accent
-            else
-                return globStyle.accentFaded
-        }
+        SpinBox {
+            id: spinbox
+            from: eeParameterData.from
+            to: eeParameterData.to
+            editable: true
 
-        contentItem: TextField {
-            z: -2
-            text: spinbox.textFromValue(spinbox.value, spinbox.locale)
-            font: spinbox.font
-            color: spinbox.accentColor
-            selectionColor: globStyle.backgroundFaded
-            selectedTextColor: globStyle.accent
-            horizontalAlignment: Qt.AlignHCenter
-            verticalAlignment: Qt.AlignVCenter
-            readOnly: !spinbox.editable
-            validator: spinbox.validator
-            inputMethodHints: Qt.ImhFormattedNumbersOnly
+            contentItem: TextField {
+                z: -2
+                text: spinbox.textFromValue(spinbox.value, spinbox.locale)
+                color: {
+                    if (enabled) {
+                        if (spinbox.contentItem.activeFocus)
+                            return globStyle.background
+                        else
+                            return globStyle.accent
+                    }
+                    else
+                        return globStyle.accentFaded
+                }
+                font.pointSize: globStyle.fontSize
+                selectionColor: globStyle.accentLight
+                selectedTextColor: globStyle.background
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+                readOnly: !spinbox.editable
+                validator: spinbox.validator
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                background: Item {}
 
-            background: Item {
-
+                Keys.onReturnPressed: {
+                    serialTask.forceActiveFocus()
+                }
             }
-        }
 
-        up.indicator: Rectangle {
-            x: spinbox.mirrored ? 0 : parent.width - width
-            height: parent.height
-            implicitWidth: 40
-            implicitHeight: 40
-            color: {
-                if (spinbox.up.pressed)
-                    return spinbox.accentColor
-                else {
-                    if (spinbox.up.hovered)
+            up.indicator: Rectangle {
+                x: spinbox.mirrored ? 0 : parent.width - width
+                height: parent.height
+                implicitWidth: globStyle.size
+                implicitHeight: globStyle.size
+                color: {
+                    if (spinbox.up.pressed)
+                        return globStyle.accent
+                    else if (spinbox.up.hovered)
                         return globStyle.backgroundFaded
                     else
                         return globStyle.background
                 }
-            }
-            border.color: spinbox.up.pressed ? globStyle.background : spinbox.accentColor
-            border.width: globStyle.thickness
+                border.color: {
+                    if (enabled) {
+                        if (spinbox.up.pressed)
+                            return globStyle.background
+                        else
+                            return globStyle.accent
+                    }
+                    else
+                        return globStyle.accentFaded
+                }
+                border.width: globStyle.thickness
 
-            Text {
-                text: "+"
-                font.pixelSize: globStyle.fontSize * 2
-                color: spinbox.up.pressed ? globStyle.background : spinbox.accentColor
-                anchors.fill: parent
-                fontSizeMode: Text.Fit
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
+                Text {
+                    text: "+"
+                    font.pixelSize: globStyle.fontSize * 2
+                    color: parent.border.color
+                    anchors.fill: parent
+                    fontSizeMode: Text.Fit
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
             }
-        }
-        down.indicator: Rectangle {
-            x: spinbox.mirrored ? parent.width - width : 0
-            height: parent.height
-            implicitWidth: 40
-            implicitHeight: 40
-            color: {
-                if (spinbox.down.pressed)
-                    return spinbox.accentColor
-                else {
-                    if (spinbox.down.hovered)
+            down.indicator: Rectangle {
+                x: spinbox.mirrored ? parent.width - width : 0
+                height: parent.height
+                implicitWidth: globStyle.size
+                implicitHeight: globStyle.size
+                color: {
+                    if (spinbox.down.pressed)
+                        return globStyle.accent
+                    else if (spinbox.down.hovered)
                         return globStyle.backgroundFaded
                     else
                         return globStyle.background
                 }
-            }
-            border.color: spinbox.down.pressed ? globStyle.background : spinbox.accentColor
-            border.width: globStyle.thickness
+                border.color: {
+                    if (enabled) {
+                        if (spinbox.down.pressed)
+                            return globStyle.background
+                        else
+                            return globStyle.accent
+                    }
+                    else
+                        return globStyle.accentFaded
+                }
+                border.width: globStyle.thickness
 
-            Text {
-                text: "-"
-                font.pixelSize: globStyle.fontSize * 2
-                color: spinbox.down.pressed ? globStyle.background : spinbox.accentColor
-                anchors.fill: parent
-                fontSizeMode: Text.Fit
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
+                Text {
+                    text: "-"
+                    font.pixelSize: globStyle.fontSize * 2
+                    color: parent.border.color
+                    anchors.fill: parent
+                    fontSizeMode: Text.Fit
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            background: Rectangle {
+                z: -4
+                implicitWidth: globStyle.size * 3.5
+                color: {
+                    if (spinbox.contentItem.activeFocus)
+                        return globStyle.accent
+                    else if (spinbox.contentItem.hovered)
+                        return globStyle.backgroundFaded
+                    else
+                        return "transparent"
+                }
+                border.color: {
+                    if (spinbox.contentItem.enabled) {
+                        if (spinbox.contentItem.activeFocus)
+                            return globStyle.background
+                        else
+                            return globStyle.accent
+                    }
+                    else
+                        return globStyle.accentFaded
+                }
+                border.width: globStyle.thickness
             }
         }
 
-        background: Rectangle {
-            z: -4
-            implicitWidth: 140
-            color: spinbox.contentItem.hovered ? globStyle.backgroundFaded : globStyle.background
-            border.color: spinbox.accentColor
-            border.width: globStyle.thickness
+        ALabel {
+            text: typeof eeParameterData.unit !== 'undefined' ? eeParameterData.unit : ""
+            color: enabled ? globStyle.accent : globStyle.accentFaded
         }
-    }
 
-    ALabel {
-        text: typeof eeParameterData.unit !== 'undefined' ? eeParameterData.unit : ""
     }
 
     function getParameterValue() {
@@ -113,5 +151,4 @@ RowLayout {
     function setParameterValue(vals) {
         spinbox.value = ByteList.toInt(vals)
     }
-
 }
