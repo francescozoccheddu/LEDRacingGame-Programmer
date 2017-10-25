@@ -19,15 +19,15 @@ ListView {
     }
 
     function changeIndex(index) {
-        beforeIndexChange()
         currentIndex = index
     }
 
     ScrollBar.vertical: ScrollBar {
         id: control
+        visible: !isAndroid
         contentItem: Rectangle {
-            implicitWidth: 6
-            implicitHeight: 100
+            implicitWidth: globStyle.size * 0.2
+            implicitHeight: globStyle.size * 2
             color: {
                 if (control.pressed)
                     return globStyle.accent

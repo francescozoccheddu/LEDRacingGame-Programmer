@@ -22,21 +22,66 @@ RowLayout {
         serialTask.read(eeParameter.address, eeParameter.size, loader.item.setParameterValue)
     }
 
-    function backup() {
-        var itemValue = loader.item.getParameterValue()
-        loaderValue = ByteList.zeroPad(itemValue, eeParameter.size)
+    Component {
+        id: parInt
+        AIntParameter {
+            eeParameterData: eeParameter.data
+            Component.onCompleted: {
+                setParameterValue(loaderValue)
+            }
+            Component.onDestruction: {
+                loaderValue = getParameterValue()
+            }
+        }
+    }
+    Component {
+        id: parReal
+        ARealParameter {
+            eeParameterData: eeParameter.data
+            Component.onCompleted: {
+                setParameterValue(loaderValue)
+            }
+            Component.onDestruction: {
+                loaderValue = getParameterValue()
+            }
+        }
+    }
+    Component {
+        id: parSound
+        ASoundParameter {
+            eeParameterData: eeParameter.data
+            Component.onCompleted: {
+                setParameterValue(loaderValue)
+            }
+            Component.onDestruction: {
+                loaderValue = getParameterValue()
+            }
+        }
+    }
+
+    Component {
+        id: parBitmap
+        ABitmapParameter {
+            eeParameterData: eeParameter.data
+            Component.onCompleted: {
+                setParameterValue(loaderValue)
+            }
+            Component.onDestruction: {
+                loaderValue = getParameterValue()
+            }
+        }
     }
 
     function getParameterQML(type) {
         switch (type) {
             case "int":
-                return "AIntParameter.qml"
+                return parInt
             case "real":
-                return "ARealParameter.qml"
+                return parReal
             case "sound":
-                return "ASoundParameter.qml"
+                return parSound
             case "bitmap":
-                return "ABitmapParameter.qml"
+                return parBitmap
         }
     }
 
@@ -45,15 +90,10 @@ RowLayout {
 
         Loader {
             id: loader
-            source: getParameterQML(eeParameter.type)
+            sourceComponent: getParameterQML(eeParameter.type)
             Layout.preferredWidth: 65535
             Layout.fillWidth: true
             asynchronous: false
-
-            onLoaded: {
-                item.eeParameterData = eeParameter.data
-                item.setParameterValue(loaderValue)
-            }
 
         }
 
