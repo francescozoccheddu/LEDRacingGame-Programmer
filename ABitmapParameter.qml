@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 Flow {
     property var eeParameterData
-    spacing: 20
+    spacing: globStyle.spacing * 2
     flow: Flow.LeftToRight
     Repeater {
         id: repeaterBitmap

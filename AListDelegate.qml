@@ -9,11 +9,11 @@ RowLayout {
     property bool isCurrent: list.currentIndex === index
 
     Rectangle {
-        Layout.preferredWidth: (isCurrent || mouseArea.containsMouse) ? 10 : 0
+        Layout.preferredWidth: (isCurrent || mouseArea.containsMouse) ? globStyle.spacing : 0
         color: isCurrent ? globStyle.accent : globStyle.foreground
         Layout.fillHeight: true
         Layout.fillWidth: false
-        Layout.rightMargin: 10
+        Layout.rightMargin: globStyle.spacing
         Behavior on Layout.preferredWidth {
             NumberAnimation { duration: 100 }
         }
@@ -21,19 +21,18 @@ RowLayout {
 
     ColumnLayout {
         id: colRoot
-
+        Layout.bottomMargin: globStyle.spacing
         RowLayout {
             Layout.preferredWidth: 65535
             Layout.fillWidth: true
-            Layout.rightMargin: 20
+            Layout.rightMargin: globStyle.spacing
             id: row
 
             ColumnLayout {
                 id: colLabels
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                Layout.topMargin: 10
-                Layout.bottomMargin: 10
-                height: 20
+                Layout.topMargin: globStyle.size * 0.25
+                Layout.bottomMargin: globStyle.size * 0.25
                 spacing: 0
 
                 ALabel {

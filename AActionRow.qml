@@ -15,14 +15,14 @@ RowLayout {
         foregroundColor: globStyle.accent
         selectedBackgroundColor: globStyle.backgroundFaded
         disabledForegroundColor: globStyle.accentFaded
-        text: qsTr("Restore")
+        text: "Restore"
     }
 
     AButton {
         id: btLoad
         enabled: serialIO.open && !serialTask.isBusy()
         onClicked: root.load()
-        text: qsTr("Load")
+        text: "Load"
         backgroundColor: globStyle.background
         foregroundColor: globStyle.accent
         selectedBackgroundColor: globStyle.backgroundFaded
@@ -32,7 +32,7 @@ RowLayout {
     AButton {
         id: btStore
         enabled: serialIO.open && !serialTask.isBusy()
-        text: qsTr("Store")
+        text: "Store"
         onClicked: root.store()
         backgroundColor: globStyle.background
         foregroundColor: globStyle.accent
