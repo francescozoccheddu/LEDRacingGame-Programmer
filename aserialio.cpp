@@ -38,7 +38,7 @@ void ASerialIO::refreshPortList()
     portList.clear();
     QList<QSerialPortInfo> portInfoList = QSerialPortInfo::availablePorts();
     for (int p = 0; p < portInfoList.length(); p++)
-        portList.append(portInfoList.at(p).portName());
+        portList.push_back(portInfoList.at(p).portName());
     emit portListChanged(getPortList());
 }
 

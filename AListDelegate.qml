@@ -1,4 +1,4 @@
-import QtQuick 2.9
+import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
@@ -10,7 +10,7 @@ RowLayout {
 
     Rectangle {
         Layout.preferredWidth: (isCurrent || mouseArea.containsMouse) ? globStyle.size * 0.25 : 0
-        color: isCurrent ? globStyle.accent : globStyle.foreground
+        color: isCurrent ? enabled? globStyle.accent : globStyle.accentFaded : globStyle.foreground
         Layout.fillHeight: true
         Layout.fillWidth: false
         Layout.rightMargin: globStyle.size * 0.25
@@ -39,14 +39,14 @@ RowLayout {
                 ALabel {
                     text: eeParameter.name
                     size: 1.5
-                    color: isCurrent ? globStyle.accent : globStyle.foreground
+                    color: isCurrent ? enabled? globStyle.accent : globStyle.accentFaded : enabled?globStyle.foreground : globStyle.foregroundFaded
                 }
 
                 ALabel {
                     id: description
                     text: eeParameter.description
                     size: 1
-                    color: isCurrent ? globStyle.accent : globStyle.foreground
+                    color: enabled? globStyle.accent : globStyle.accentFaded
                     visible: list.currentIndex === index
                 }
             }

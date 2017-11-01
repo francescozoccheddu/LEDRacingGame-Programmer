@@ -13,10 +13,10 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* ctx{engine.rootContext()};
 
-    AFileIO *fileIO = new AFileIO();
-    ASerialIO *serialIO = new ASerialIO();
-    ctx->setContextProperty("fileIO", fileIO);
-    ctx->setContextProperty("serialIO", serialIO);
+    AFileIO fileIO;
+    ASerialIO serialIO;
+    ctx->setContextProperty("fileIO", &fileIO);
+    ctx->setContextProperty("serialIO", &serialIO);
 #ifdef Q_OS_ANDROID
     ctx->setContextProperty("isAndroid", QVariant(true));
 #else
