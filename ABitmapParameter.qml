@@ -1,4 +1,4 @@
-import QtQuick 2.9
+import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
@@ -35,7 +35,7 @@ Flow {
                                 return mouseArea.containsMouse ? globStyle.foreground : globStyle.backgroundFaded
                         }
                         else
-                            return on ? globStyle.accentFaded : globStyle.foregroundFaded
+                            return on ? globStyle.accentFaded : globStyle.backgroundFaded
                     }
                     border.width: globStyle.thickness
                     border.color: mouseArea.pressed ? globStyle.background : color

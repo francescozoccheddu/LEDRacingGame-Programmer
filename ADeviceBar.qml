@@ -1,4 +1,4 @@
-import QtQuick 2.9
+import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
@@ -19,7 +19,7 @@ Item {
         opacity: serialTask.isBusy() ? 1 : 0
 
         Behavior on opacity {
-            OpacityAnimator { duration: 200 }
+            NumberAnimation { duration: 200 }
         }
     }
 
@@ -35,7 +35,7 @@ Item {
                 model: {
                     var list = serialIO.portList
                     if (list.length === 0)
-                        list = ["No port"]
+                        return ["No port"]
                     return list
                 }
 
@@ -156,7 +156,8 @@ Item {
                     border.width: globStyle.thickness
                 }
 
-                popup: Popup {
+                /*popup: Popup {
+                    y: 0
                     width: cbDevice.width
                     implicitHeight: contentItem.implicitHeight
                     onOpened: serialIO.refreshPortList()
@@ -164,7 +165,7 @@ Item {
                     contentItem: ListView {
                         clip: true
                         implicitHeight: contentHeight
-                        model: cbDevice.popup.visible ? cbDevice.delegateModel : null
+                        model: cbDevice.popup.visible ? cbDevice.delegateModel : []
                         currentIndex: cbDevice.highlightedIndex
 
                         ScrollIndicator.vertical: ScrollIndicator { }
@@ -175,9 +176,8 @@ Item {
                         border.width: globStyle.thickness
                         color: globStyle.background
                     }
-                }
+                }*/
             }
-
             AButton {
                 visible: !serialIO.open
                 enabled: serialIO.portList.length > 0

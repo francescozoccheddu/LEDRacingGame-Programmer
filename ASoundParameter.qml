@@ -1,4 +1,4 @@
-import QtQuick 2.9
+import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "ByteList.js" as ByteList
@@ -42,10 +42,11 @@ ColumnLayout {
         var vals = []
         for (var t = 0; t < tc; t++) {
             var valsPWM = repeaterPWM.itemAt(t).getParameterValue()
-            vals.push(ByteList.zeroPad(valsPWM, 2))
+            vals = vals.concat(ByteList.zeroPad(valsPWM, 2))
             var valsDuration = repeaterDuration.itemAt(t).getParameterValue()
-            vals.push(ByteList.zeroPad(valsDuration, 2))
+            vals = vals.concat(ByteList.zeroPad(valsDuration, 2))
         }
+        vals = vals.concat([0,0,0,0])
         return vals
     }
 

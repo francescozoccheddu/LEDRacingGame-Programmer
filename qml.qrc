@@ -17,5 +17,6 @@
         <file>AStyle.qml</file>
         <file>ALogic.qml</file>
         <file>ALabel.qml</file>
+        <file>icon.ico</file>
     </qresource>
 </RCC>
