@@ -9,16 +9,16 @@ RowLayout {
     property alias load: loader.active
     property var loaderValue: eeParameter.defvalue
 
-    function restore() {
+    function restoreParameter() {
         loader.item.setParameterValue(eeParameter.defvalue.slice())
     }
 
-    function store() {
+    function storeParameter() {
         var vals = loader.item.getParameterValue()
         serialTask.write(eeParameter.address, ByteList.zeroPad(vals, eeParameter.size))
     }
 
-    function load() {
+    function loadParameter() {
         serialTask.read(eeParameter.address, eeParameter.size, loader.item.setParameterValue)
     }
 
