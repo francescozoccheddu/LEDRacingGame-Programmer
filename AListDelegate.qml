@@ -67,14 +67,14 @@ RowLayout {
             AActionRow {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 visible: isCurrent
-                onRestore: {
-                    panel.restore()
+                onRestoreParameter: {
+                    panel.restoreParameter()
                 }
-                onLoad: {
-                    panel.load()
+                onLoadParameter: {
+                    panel.loadParameter()
                 }
-                onStore: {
-                    panel.store()
+                onStoreParameter: {
+                    panel.storeParameter()
                 }
             }
 
